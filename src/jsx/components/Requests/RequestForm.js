@@ -40,7 +40,7 @@ const RequestForm = ({show, onShow})=>{
                 <div className="">
                     <form >
                         <div className="modal-header">
-                            <h4 className="modal-title fs-20">Add Access Request</h4>
+                            <h4 className="modal-title fs-20">Access Request</h4>
                             <button type="button" className="btn-close" onClick={()=> onShow(false)} data-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
@@ -103,10 +103,14 @@ const RequestForm = ({show, onShow})=>{
                                 </div>
                             </div>
                         </div>
-                        <div className="modal-footer">
-                            <button type="submit" className="btn btn-primary" onClick={handleAddFormSubmit}>save as draft</button>
-                            <button type="submit" className="btn btn-primary" onClick={handleAddFormSubmit}>submit</button>
-                            <button type="button" onClick={()=> onShow(false)} className="btn btn-danger"> <i className="flaticon-delete-1"></i> Discard</button>
+                        <div className=" modal-footer">
+                            <div className="container">
+                                <div className="row">
+                                    <button type="submit" className="btn btn-secondary  m-2 col" onClick={handleAddFormSubmit}>save as draft</button>
+                                    <button type="button"  onClick={handleAddFormSubmit} className="btn btn-secondary  m-2 col "> <i className="flaticon-delete-1"></i>submit</button>
+                                    <button type="submit" className="btn btn-danger m-2 col " onClick={()=> onShow(false)}>cancel</button>
+                                </div>
+                            </div>
                         </div>
                     </form>
 

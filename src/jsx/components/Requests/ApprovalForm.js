@@ -2,9 +2,19 @@ import React, {useEffect, useState} from 'react';
 import user from "../../../images/task/user.jpg";
 import {Modal} from "react-bootstrap";
 import swal from "sweetalert";
+import {
+    fetchProjectList,
+    fetchRequesterList,
+    fetchSystemAccessList,
+    fetchSystemList
+} from "../../../backCallMock/RequestServiceMock";
 
 const ApprovalForm = ({show, onShow})=>{
     const [file, setFile] = React.useState(null);
+    const requesterList= fetchRequesterList();
+    const projectList =fetchProjectList();
+    const systemList = fetchSystemList();
+    const [systemAccessList, setSystemAccessList]=useState(fetchSystemAccessList(systemList[0]))
     //Add data
     const [addFormData, setAddFormData ] = useState({
         Cust_Id:'',
@@ -35,7 +45,7 @@ const ApprovalForm = ({show, onShow})=>{
                 <div className="">
                     <form >
                         <div className="modal-header">
-                            <h4 className="modal-title fs-20">Add Access Request</h4>
+                            <h4 className="modal-title fs-20">Access Request</h4>
                             <button type="button" className="btn-close" onClick={()=> onShow(false)} data-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
@@ -58,60 +68,40 @@ const ApprovalForm = ({show, onShow})=>{
                                         <label className="text-black font-w500">Requester</label>
                                         <div className="contact-occupation">
                                             <select
-                                                defaultValue={"Ayman El-shayeb"}
                                                 className="form-control "
                                             >
-                                                <option>Ayman El-shayeb</option>
-                                                <option>Raghavan Chakravarty</option>
-                                                <option>Pasha Pasha</option>
+                                                {requesterList.map((requester) => <option id={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label className="text-black font-w500">Project Id</label>
-                                        <div className="contact-name">
-                                            <input type="text"  className="form-control"  autoComplete="off"
-                                                   name="Cust_Id" required="required"
-                                                   onChange={handleAddFormChange}
-                                                   placeholder="Project ID"
-                                            />
-                                            <span className="validation-text"></span>
-                                        </div>
-                                    </div>
-                                    <div className="form-group mb-3">
-                                        <label className="text-black font-w500">Sub Project Id</label>
-                                        <div className="contact-name">
-                                            <input type="text"  className="form-control"  autoComplete="off"
-                                                   name="Date_Join" required="required"
-                                                   onChange={handleAddFormChange}
-                                                   placeholder="Sub Project Id"
-                                            />
-                                            <span className="validation-text"></span>
-                                        </div>
-                                    </div>
-                                    <div className="form-group mb-3">
-                                        <label className="text-black font-w500">SVN Access</label>
+                                        <label className="text-black font-w500">Project</label>
                                         <div className="contact-occupation">
                                             <select
-                                                defaultValue={"Read"}
                                                 className="form-control "
                                             >
-                                                <option>Read Access</option>
-                                                <option>Write Access</option>
-                                                <option>Admin Access</option>
+                                                {projectList.map((project) => <option id={project.id}>{project.name}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group mb-3">
+                                        <label className="text-black font-w500">Systems</label>
+                                        <div className="contact-occupation">
+                                            <select
+                                                className="form-control " onChange={(event)=>setSystemAccessList(fetchSystemAccessList(event.target.value))}
+                                            >
+                                                {systemList.map((system) => <option value={system}>{system}</option>)}
                                             </select>
                                         </div>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label className="text-black font-w500">Jira Access</label>
+                                        <label className="text-black font-w500">Access</label>
                                         <div className="contact-occupation">
                                             <select
-                                                defaultValue={"Read Access"}
                                                 className="form-control "
                                             >
-                                                <option>Read Access</option>
-                                                <option>Write Access</option>
-                                                <option>Admin Access</option>
+                                                {systemAccessList.map((systemAccess) => <option value={systemAccess.id}>{systemAccess.accessPermission}</option>)}
                                             </select>
                                         </div>
                                     </div>
@@ -120,13 +110,9 @@ const ApprovalForm = ({show, onShow})=>{
                         </div>
                         <div className=" modal-footer">
                             <div className="container">
-                                <div className="row p-2">
-
-                                    <button type="submit" className="btn btn-secondary  m-2 col" onClick={handleExecuteRequest}>Execute Manually</button>
-                                    <button type="submit" className="btn btn-secondary m-2 col " onClick={handleExecuteRequest}>Execute Automatically</button>
-                                </div>
                                 <div className="row">
-                                    <button type="button" onClick={()=> onShow(false)} className="btn btn-danger m-2 col "> <i className="flaticon-delete-1"></i>Return to Requester</button>
+                                    <button type="button" onClick={()=> onShow(false)} className="btn btn-secondary m-2 col "> <i className="flaticon-delete-1"></i>Return to Requester</button>
+                                    <button type="submit" className="btn btn-secondary m-2 col " onClick={handleExecuteRequest}>Approve</button>
                                     <button type="button" onClick={()=> onShow(false)} className="btn btn-danger m-2 col "> <i className="flaticon-delete-1"></i>Cancel</button>
                                 </div>
                             </div>
