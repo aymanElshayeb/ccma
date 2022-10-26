@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import user from "../../../images/task/user.jpg";
 import swal from "sweetalert";
+import {fetchRequesterList, fetchProjectList, fetchAccessList, fetchSystemList, fetchSystemAccessList} from "../../../backCallMock/RequestServiceMock";
 
 const RequestForm = ({show, onShow})=>{
 
@@ -10,11 +11,13 @@ const RequestForm = ({show, onShow})=>{
         Requester_ID:'',
         Project_ID:'',
         Sub_Project_ID:'',
-        SVN_Access:'',
-        Jira_Access:'',
+        system_access_ID:'',
     });
-    const accessList =[{name: "Read Access", id: 0 }, {name: "Write Access", id: 1 }, {name: "Admin Access", id: 2 }]
 
+    const requesterList= fetchRequesterList();
+    const projectList =fetchProjectList();
+    const systemList = fetchSystemList();
+    const [systemAccessList, setSystemAccessList]=useState(fetchSystemAccessList(systemList[0]))
     const [file, setFile] = React.useState(null);
     //Add Submit data
     const handleAddFormSubmit = (event)=> {
@@ -60,54 +63,40 @@ const RequestForm = ({show, onShow})=>{
                                         <label className="text-black font-w500">Requester</label>
                                         <div className="contact-occupation">
                                             <select
-                                                defaultValue={"Ayman El-shayeb"}
                                                 className="form-control "
-                                                disabled >
-                                                <option>Ayman El-shayeb</option>
-                                                <option>Write Access</option>
-                                                <option>Admin Access</option>
+                                            >
+                                                {requesterList.map((requester) => <option id={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label className="text-black font-w500">Project Id</label>
-                                        <div className="contact-name">
-                                            <input type="text"  className="form-control"  autoComplete="off"
-                                                   name="Cust_Id" required="required"
-                                                   onChange={handleAddFormChange}
-                                                   placeholder="Project ID"
-                                            />
-                                            <span className="validation-text"></span>
-                                        </div>
-                                    </div>
-                                    <div className="form-group mb-3">
-                                        <label className="text-black font-w500">Sub Project Id</label>
-                                        <div className="contact-name">
-                                            <input type="text"  className="form-control"  autoComplete="off"
-                                                   name="Date_Join" required="required"
-                                                   onChange={handleAddFormChange}
-                                                   placeholder="Sub Project Id"
-                                            />
-                                            <span className="validation-text"></span>
-                                        </div>
-                                    </div>
-                                    <div className="form-group mb-3">
-                                        <label className="text-black font-w500">SVN Access</label>
+                                        <label className="text-black font-w500">Project</label>
                                         <div className="contact-occupation">
                                             <select
                                                 className="form-control "
                                             >
-                                                {accessList.map((access) => <option id={access.id}>{access.name}</option>)}
+                                                {projectList.map((project) => <option id={project.id}>{project.name}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group mb-3">
+                                        <label className="text-black font-w500">Systems</label>
+                                        <div className="contact-occupation">
+                                            <select
+                                                className="form-control " onChange={(event)=>setSystemAccessList(fetchSystemAccessList(event.target.value))}
+                                            >
+                                                {systemList.map((system) => <option value={system}>{system}</option>)}
                                             </select>
                                         </div>
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label className="text-black font-w500">Jira Access</label>
+                                        <label className="text-black font-w500">Access</label>
                                         <div className="contact-occupation">
                                             <select
                                                 className="form-control "
                                             >
-                                                {accessList.map((access) => <option id={access.id}>{access.name}</option>)}
+                                                {systemAccessList.map((systemAccess) => <option value={systemAccess.id}>{systemAccess.accessPermission}</option>)}
                                             </select>
                                         </div>
                                     </div>

@@ -81,25 +81,55 @@ const FilteredRequestListGrid = ({requestLists}) =>{
 									</div>
 								</th>
 								<th className="sorting_asc">ID</th>
-								<th className="sorting">Requester</th>
+								<th className="sorting">requester</th>
 								<th className="sorting">Project</th>
-								<th className="sorting">Sub Project</th>
 								<th className="sorting">SVN Access</th>
 								<th className="sorting">Jira Access</th>
 								<th className="sorting">Status</th>
+								<th className="sorting">creationDate</th>
 								<th className="sorting bg-none"></th>
 							</tr>
 						</thead>
 						<tbody>
 						{ requestLists.map((request, index)=> {
-							let requestEntries = Object.entries(request);
-							requestEntries = requestEntries.map(([key,value]) =>{
-									return(<td>
-										<div>
-											<h5 className="text-nowrap">{value}</h5>
-										</div>
-									</td>)
-							});
+							const requestEntries =(<>
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.id}</h5>
+											</div>
+										</td>
+
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.requester.fullName}</h5>
+											</div>
+										</td>
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.project.name}</h5>
+											</div>
+										</td>
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.systemAccess.systemName=="JIRA"? request.systemAccess.accessPermission:""}</h5>
+											</div>
+										</td>
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.systemAccess.systemName=="SVN"? request.systemAccess.accessPermission:""}</h5>
+											</div>
+										</td>
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.status}</h5>
+											</div>
+										</td>
+										<td>
+											<div>
+												<h5 className="text-nowrap">{request.creationDate}</h5>
+											</div>
+										</td>
+							</>);
 
 							return (<>
 								<tr role="row" className={(index % 2 == 0)?"even":"odd"}>

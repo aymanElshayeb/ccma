@@ -3,7 +3,7 @@ export const PENDING ="PENDING";
 export const READY ="READY";
 export const COMPLETED ="COMPLETED";
 
-const requestList = [
+export const requestList = [
     {
         "id": 1,
         "requester": {
@@ -60,95 +60,11 @@ const requestList = [
     }
 ];
 
-const accessList=[
-    {
-        "id": 1,
-        "systemName": "JIRA",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 2,
-        "systemName": "JIRA",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 3,
-        "systemName": "JIRA",
-        "accessPermission": "ADMIN"
-    },
-    {
-        "id": 4,
-        "systemName": "SVN",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 5,
-        "systemName": "SVN",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 6,
-        "systemName": "SVN",
-        "accessPermission": "ADMIN"
-    }
-];
-const  projectList=[
-    {
-        "id": 1,
-        "name": "CTRX Radar Family [CTRXFAMILY]"
-    }
-];
-const requesterList  = [
-    {
-        "id": 1,
-        "userName": "elshayeb",
-        "email": "Elshayeb.external@infineon.com",
-        "fullName": "Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)"
-    },
-    {
-        "id": 2,
-        "userName": "lnzautomationuser",
-        "email": "no.mail@nomail.nomail",
-        "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
-    }
-];
-const SystemAccessList = [
-    {
-        "id": 1,
-        "systemName": "JIRA",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 2,
-        "systemName": "JIRA",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 3,
-        "systemName": "JIRA",
-        "accessPermission": "ADMIN"
-    },
-    {
-        "id": 4,
-        "systemName": "SVN",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 5,
-        "systemName": "SVN",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 6,
-        "systemName": "SVN",
-        "accessPermission": "ADMIN"
-    }
-];
 const addRequest= (request)=>{
-    request.ID = requestList.length;
-    requestList.push(request);
-    console.log(request);
-    console.log(requestList);
+request.ID = requestList.length;
+requestList.push(request);
+console.log(request);
+console.log(requestList);
 }
 
 const updateRequest= (request)=>{
@@ -161,21 +77,7 @@ const updateRequest= (request)=>{
 export const  fetchRequestList = ()=>{
     return requestList;
 }
-export const fetchAccessList = ()=>{
-    return accessList;
-}
-export const fetchProjectList= ()=>{
-    return projectList;
-}
-export const fetchRequesterList= ()=>{
-    return requesterList;
-}
-export const fetchSystemList =()=>{
-    return SystemAccessList.map((systemAccess)=>systemAccess.systemName).filter((value, index, self)=>  self.indexOf(value) === index);
-}
-export const fetchSystemAccessList =(systemName)=>{
-    return SystemAccessList.filter((systemAccess)=> systemAccess.systemName ===systemName);
-}
+
 const  fetchRequest = (id)=>{
     const existingRequest = requestList.find((existingRequest)=> existingRequest.ID == id);
     return existingRequest;
