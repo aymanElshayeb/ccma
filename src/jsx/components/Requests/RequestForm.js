@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import user from "../../../images/task/user.jpg";
 import swal from "sweetalert";
-import {fetchRequesterList, fetchProjectList, fetchAllSystemAccessList, getSystemList, getSystemAccessList} from "../../../services/Request/RequestService";
-
+import {fetchRequesterList, fetchProjectList, fetchAllSystemAccessList, getSystemList, getSystemAccessList, submitRequest, saveAsDraftRequest} from "../../../services/Request/RequestService";
+import requestTemplate from "../../../template/request.json"
 
 let requesterList =[];
 let projectList =[];
@@ -37,10 +37,17 @@ const RequestForm = ({show, onShow})=>{
     },show)
 
     //Add Submit data
-    const handleAddFormSubmit = (event)=> {
+    const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
-        swal('Good job!', 'Successfully Added', "success");
+        submitRequest(requestTemplate);
+        swal('Good job!', 'Successfully submitted', "success");
+    };
+    const saveAsDraftHandler = (event)=> {
+        event.preventDefault();
+        onShow(false);
+        saveAsDraftRequest(requestTemplate);
+        swal('Good job!', 'Successfully save as draft', "success");
     };
     // Add contact function
     const handleAddFormChange = (event) => {
@@ -123,8 +130,8 @@ const RequestForm = ({show, onShow})=>{
                         <div className=" modal-footer">
                             <div className="container">
                                 <div className="row">
-                                    <button type="submit" className="btn btn-secondary  m-2 col" onClick={handleAddFormSubmit}>save as draft</button>
-                                    <button type="button"  onClick={handleAddFormSubmit} className="btn btn-secondary  m-2 col "> <i className="flaticon-delete-1"></i>submit</button>
+                                    <button type="submit" className="btn btn-secondary  m-2 col" onClick={saveAsDraftHandler}>save as draft</button>
+                                    <button type="button"  onClick={submitHandler} className="btn btn-secondary  m-2 col "> <i className="flaticon-delete-1"></i>submit</button>
                                     <button type="submit" className="btn btn-danger m-2 col " onClick={(event)=> {event.preventDefault(); onShow(false);}}>cancel</button>
                                 </div>
                             </div>

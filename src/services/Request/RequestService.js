@@ -173,6 +173,21 @@ export const fetchRequesterList= ()=>{
 export const   fetchAllSystemAccessList = ()=>{
     return ccmaInstance.get('systemAccess/');
 }
+export const submitRequest=(request)=>{
+    ccmaInstance.post('requestAction/submit/',request)
+}
+export const saveAsDraftRequest= (request)=>{
+    ccmaInstance.post('requestAction/saveAsDraft/',request)
+}
+
+
+const executeRequest= (request)=>{
+    ccmaInstance.post('requestAction/execute/',request)
+}
+
+const returnRequest= (request)=>{
+    ccmaInstance.post('requestAction/returnToRequester/',request)
+}
 export const getSystemList =(SystemAccessList)=>{
     console.log("getSystemList ");
     console.log( SystemAccessList);
@@ -193,28 +208,3 @@ const  fetchRequest = (id)=>{
     return existingRequest;
 }
 
-const saveAsDraftRequest= (request)=>{
-    request.status = DRAFT;
-    addRequest(request);
-    console.log(request);
-    console.log(requestList);
-}
-
-const submitRequest= (request)=>{
-    request.status = PENDING;
-    addRequest(request);
-    console.log(request);
-    console.log(requestList);
-}
-
-const executeRequest= (request)=>{
-    request.status = READY;
-    updateRequest(request);
-    console.log(request);
-    console.log(requestList);
-}
-
-const returnRequest= (request)=>{
-    request.status = DRAFT;
-    updateRequest(request);
-}

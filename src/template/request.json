@@ -1,0 +1,15 @@
+{
+  "id":1,
+  "requester":{
+    "id":2
+  },
+  "systemAccess":{
+    "id":3
+  },
+  "project":{
+    "id":1
+  },
+  "lastModifier":{
+    "id":2
+  }
+}
