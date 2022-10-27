@@ -2,7 +2,17 @@ import React, {useEffect, useState} from 'react';
 import {Modal} from "react-bootstrap";
 import user from "../../../images/task/user.jpg";
 import swal from "sweetalert";
-import {fetchRequesterList, fetchProjectList, fetchAccessList, fetchSystemList, fetchSystemAccessList} from "../../../backCallMock/RequestServiceMock";
+import {fetchRequesterList, fetchProjectList, fetchAllSystemAccessList, getSystemList, getSystemAccessList} from "../../../services/Request/RequestService";
+
+
+let requesterList =[];
+let projectList =[];
+let allSystemAccessList=[]
+let systemList =[];
+let systemAccessListInit=[];
+
+fetchRequesterList().then((response) => requesterList = response.data);
+fetchProjectList().then((response) => projectList = response.data);
 
 const RequestForm = ({show, onShow})=>{
 
@@ -14,11 +24,18 @@ const RequestForm = ({show, onShow})=>{
         system_access_ID:'',
     });
 
-    const requesterList= fetchRequesterList();
-    const projectList =fetchProjectList();
-    const systemList = fetchSystemList();
-    const [systemAccessList, setSystemAccessList]=useState(fetchSystemAccessList(systemList[0]))
+
+
     const [file, setFile] = React.useState(null);
+    const [systemAccessList, setSystemAccessList]=useState(systemAccessListInit);
+    useEffect(()=>{
+        fetchAllSystemAccessList().then((response)=>{
+            allSystemAccessList= response.data;
+            systemList= getSystemList(allSystemAccessList);
+            setSystemAccessList(getSystemAccessList(allSystemAccessList ,allSystemAccessList[0].systemName ));
+        });
+    },show)
+
     //Add Submit data
     const handleAddFormSubmit = (event)=> {
         event.preventDefault();
@@ -84,7 +101,7 @@ const RequestForm = ({show, onShow})=>{
                                         <label className="text-black font-w500">Systems</label>
                                         <div className="contact-occupation">
                                             <select
-                                                className="form-control " onChange={(event)=>setSystemAccessList(fetchSystemAccessList(event.target.value))}
+                                                className="form-control " onChange={(event)=>setSystemAccessList(getSystemAccessList(allSystemAccessList, event.target.value))}
                                             >
                                                 {systemList.map((system) => <option value={system}>{system}</option>)}
                                             </select>
@@ -108,7 +125,7 @@ const RequestForm = ({show, onShow})=>{
                                 <div className="row">
                                     <button type="submit" className="btn btn-secondary  m-2 col" onClick={handleAddFormSubmit}>save as draft</button>
                                     <button type="button"  onClick={handleAddFormSubmit} className="btn btn-secondary  m-2 col "> <i className="flaticon-delete-1"></i>submit</button>
-                                    <button type="submit" className="btn btn-danger m-2 col " onClick={()=> onShow(false)}>cancel</button>
+                                    <button type="submit" className="btn btn-danger m-2 col " onClick={(event)=> {event.preventDefault(); onShow(false);}}>cancel</button>
                                 </div>
                             </div>
                         </div>

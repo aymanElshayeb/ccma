@@ -1,9 +1,11 @@
+import {ccmaInstance} from "../CcmaInstance";
+
 export const DRAFT = "DRAFT";
 export const PENDING ="PENDING";
 export const READY ="READY";
 export const COMPLETED ="COMPLETED";
 
-export const requestList = [
+const requestList = [
     {
         "id": 1,
         "requester": {
@@ -60,11 +62,95 @@ export const requestList = [
     }
 ];
 
+const accessList=[
+    {
+        "id": 1,
+        "systemName": "JIRA",
+        "accessPermission": "READ"
+    },
+    {
+        "id": 2,
+        "systemName": "JIRA",
+        "accessPermission": "WRITE"
+    },
+    {
+        "id": 3,
+        "systemName": "JIRA",
+        "accessPermission": "ADMIN"
+    },
+    {
+        "id": 4,
+        "systemName": "SVN",
+        "accessPermission": "READ"
+    },
+    {
+        "id": 5,
+        "systemName": "SVN",
+        "accessPermission": "WRITE"
+    },
+    {
+        "id": 6,
+        "systemName": "SVN",
+        "accessPermission": "ADMIN"
+    }
+];
+const  projectList=[
+    {
+        "id": 1,
+        "name": "CTRX Radar Family [CTRXFAMILY]"
+    }
+];
+const requesterList  = [
+    {
+        "id": 1,
+        "userName": "elshayeb",
+        "email": "Elshayeb.external@infineon.com",
+        "fullName": "Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)"
+    },
+    {
+        "id": 2,
+        "userName": "lnzautomationuser",
+        "email": "no.mail@nomail.nomail",
+        "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
+    }
+];
+const SystemAccessList = [
+    {
+        "id": 1,
+        "systemName": "JIRA",
+        "accessPermission": "READ"
+    },
+    {
+        "id": 2,
+        "systemName": "JIRA",
+        "accessPermission": "WRITE"
+    },
+    {
+        "id": 3,
+        "systemName": "JIRA",
+        "accessPermission": "ADMIN"
+    },
+    {
+        "id": 4,
+        "systemName": "SVN",
+        "accessPermission": "READ"
+    },
+    {
+        "id": 5,
+        "systemName": "SVN",
+        "accessPermission": "WRITE"
+    },
+    {
+        "id": 6,
+        "systemName": "SVN",
+        "accessPermission": "ADMIN"
+    }
+];
 const addRequest= (request)=>{
-request.ID = requestList.length;
-requestList.push(request);
-console.log(request);
-console.log(requestList);
+    request.ID = requestList.length;
+    requestList.push(request);
+    console.log(request);
+    console.log(requestList);
 }
 
 const updateRequest= (request)=>{
@@ -75,7 +161,31 @@ const updateRequest= (request)=>{
 }
 
 export const  fetchRequestList = ()=>{
-    return requestList;
+    return ccmaInstance.get('request/')
+
+}
+export const fetchProjectList= ()=>{
+    return ccmaInstance.get('project/')
+}
+export const fetchRequesterList= ()=>{
+    return ccmaInstance.get('requester/')
+}
+export const   fetchAllSystemAccessList = ()=>{
+    return ccmaInstance.get('systemAccess/');
+}
+export const getSystemList =(SystemAccessList)=>{
+    console.log("getSystemList ");
+    console.log( SystemAccessList);
+    return SystemAccessList.map((systemAccess)=>systemAccess.systemName).filter((value, index, self)=>  self.indexOf(value) === index);
+    }
+
+export const getSystemAccessList =(systemAccessList, systemName)=>{
+    console.log("getSystemAccessList");
+    console.log(systemAccessList );
+    console.log("systemName");
+    console.log(systemName)
+
+     return systemAccessList.filter((systemAccess)=> systemAccess.systemName ===systemName);
 }
 
 const  fetchRequest = (id)=>{

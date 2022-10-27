@@ -1,9 +1,6 @@
 import React,{ useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
-
 import {DropdownRequest} from './RequestsListGrid';
-
-import pic3 from './../../../images/avatar/3.jpg';
 
 const FilteredRequestListGrid = ({requestLists}) =>{
 	const [data, setData] = useState(

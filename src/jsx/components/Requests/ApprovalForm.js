@@ -2,19 +2,25 @@ import React, {useEffect, useState} from 'react';
 import user from "../../../images/task/user.jpg";
 import {Modal} from "react-bootstrap";
 import swal from "sweetalert";
-import {
-    fetchProjectList,
-    fetchRequesterList,
-    fetchSystemAccessList,
-    fetchSystemList
-} from "../../../backCallMock/RequestServiceMock";
+import {fetchRequesterList, fetchProjectList, fetchAllSystemAccessList, getSystemList, getSystemAccessList} from "../../../services/Request/RequestService";
+
+
+
+let requesterList =[];
+let projectList =[];
+let allSystemAccessList=[]
+let systemList =[];
+let systemAccessListInit=[];
+
+fetchRequesterList().then((response) => requesterList = response.data);
+fetchProjectList().then((response) => projectList = response.data);
+
+
 
 const ApprovalForm = ({show, onShow})=>{
     const [file, setFile] = React.useState(null);
-    const requesterList= fetchRequesterList();
-    const projectList =fetchProjectList();
-    const systemList = fetchSystemList();
-    const [systemAccessList, setSystemAccessList]=useState(fetchSystemAccessList(systemList[0]))
+
+
     //Add data
     const [addFormData, setAddFormData ] = useState({
         Cust_Id:'',
@@ -23,6 +29,15 @@ const ApprovalForm = ({show, onShow})=>{
         Location:'',
         image:'',
     });
+    const [systemAccessList, setSystemAccessList]=useState(systemAccessListInit);
+    useEffect(()=>{
+        fetchAllSystemAccessList().then((response)=>{
+            allSystemAccessList= response.data;
+            systemList= getSystemList(allSystemAccessList);
+            setSystemAccessList(getSystemAccessList(allSystemAccessList ,allSystemAccessList[0].systemName ));
+        });
+    },show)
+
     // Add contact function
     const handleAddFormChange = (event) => {
         event.preventDefault();
@@ -89,7 +104,7 @@ const ApprovalForm = ({show, onShow})=>{
                                         <label className="text-black font-w500">Systems</label>
                                         <div className="contact-occupation">
                                             <select
-                                                className="form-control " onChange={(event)=>setSystemAccessList(fetchSystemAccessList(event.target.value))}
+                                                className="form-control " onChange={(event)=>setSystemAccessList(getSystemAccessList(allSystemAccessList, event.target.value))}
                                             >
                                                 {systemList.map((system) => <option value={system}>{system}</option>)}
                                             </select>

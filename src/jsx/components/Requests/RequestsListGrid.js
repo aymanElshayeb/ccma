@@ -3,7 +3,7 @@ import {Dropdown, Nav, Tab} from "react-bootstrap";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import moment from "moment/moment";
 import FilteredRequestListGrid from "./FilteredRequestListGrid";
-import {COMPLETED, DRAFT, fetchRequestList, PENDING, READY} from "../../../backCallMock/RequestServiceMock";
+import {COMPLETED, DRAFT, fetchRequestList, PENDING, READY} from "../../../services/Request/RequestService";
 
 
 
@@ -57,7 +57,8 @@ const RequestsListGrid = ()=>{
     // use effect
     useEffect(() => {
         setData(document.querySelectorAll("#example2_wrapper tbody tr"));
-        setRequestsList(fetchRequestList());
+        fetchRequestList().then((response)=> setRequestsList(response.data));
+
         setRequestsDraftList(requestsList.filter((request)=> request.status === DRAFT));
         setRequestsPendingList(requestsList.filter((request)=> request.status === PENDING));
         setRequestsReadyList(requestsList.filter((request)=> request.status === READY));
