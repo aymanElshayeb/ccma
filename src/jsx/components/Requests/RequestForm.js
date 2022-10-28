@@ -5,29 +5,42 @@ import swal from "sweetalert";
 import {fetchRequesterList, fetchProjectList, fetchAllSystemAccessList, getSystemList, getSystemAccessList, submitRequest, saveAsDraftRequest} from "../../../services/Request/RequestService";
 import requestTemplate from "../../../template/request.json"
 
-let requesterList =[];
-let projectList =[];
-let allSystemAccessList=[]
-let systemList =[];
-let systemAccessListInit=[];
 
-fetchRequesterList().then((response) => requesterList = response.data);
-fetchProjectList().then((response) => projectList = response.data);
+
+
 
 const RequestForm = ({show, onShow})=>{
 
     const [file, setFile] = React.useState(null);
-    const [systemAccessList, setSystemAccessList]=useState(systemAccessListInit);
+    const [requesterList, setRequesterList]=useState([{}]);
+    const [projectList, setProjectList]=useState([{}]);
+    const [allSystemAccessList, setAllSystemAccessList]=useState([{}]);
+    const [systemList, setSystemList]=useState([]);
+    const [systemAccessList, setSystemAccessList]=useState([{}]);
     const [requesterId, setRequesterId] = useState(1);
     const [projectId, setProjectId] = useState(1);
     const [systemAccessId, setSystemAccessId] = useState(1);
 
 
     useEffect(()=>{
+        fetchRequesterList().then((response) => {
+            const responseList = response.data;
+            setRequesterList(responseList);
+            setRequesterId(responseList[0].id);
+        } );
+        fetchProjectList().then((response) => {
+            const responseList = response.data;
+            setProjectList(responseList);
+            setProjectId(responseList[0].id);
+        });
         fetchAllSystemAccessList().then((response)=>{
-            allSystemAccessList= response.data;
-            systemList= getSystemList(allSystemAccessList);
-            setSystemAccessList(getSystemAccessList(allSystemAccessList ,allSystemAccessList[0].systemName ));
+            const responseList = response.data;
+            setAllSystemAccessList(responseList);
+            let systemList= getSystemList(responseList);
+            setSystemList(systemList);
+            let systemAccessList = getSystemAccessList(responseList ,responseList[0].systemName );
+            setSystemAccessList(systemAccessList);
+            setSystemAccessId(systemAccessList[0].id);
         });
     },show)
 
