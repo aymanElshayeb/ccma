@@ -1,5 +1,4 @@
 {
-  "id":1,
   "requester":{
     "id":2
   },
@@ -8,8 +7,5 @@
   },
   "project":{
     "id":1
-  },
-  "lastModifier":{
-    "id":2
   }
 }

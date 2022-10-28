@@ -16,18 +16,13 @@ fetchProjectList().then((response) => projectList = response.data);
 
 const RequestForm = ({show, onShow})=>{
 
-    //Add data
-    const [addFormData, setAddFormData ] = useState({
-        Requester_ID:'',
-        Project_ID:'',
-        Sub_Project_ID:'',
-        system_access_ID:'',
-    });
-
-
-
     const [file, setFile] = React.useState(null);
     const [systemAccessList, setSystemAccessList]=useState(systemAccessListInit);
+    const [requesterId, setRequesterId] = useState(1);
+    const [projectId, setProjectId] = useState(1);
+    const [systemAccessId, setSystemAccessId] = useState(1);
+
+
     useEffect(()=>{
         fetchAllSystemAccessList().then((response)=>{
             allSystemAccessList= response.data;
@@ -40,6 +35,9 @@ const RequestForm = ({show, onShow})=>{
     const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
+        requestTemplate.requester.id = requesterId;
+        requestTemplate.project.id = projectId;
+        requestTemplate.systemAccess.id= systemAccessId;
         submitRequest(requestTemplate);
         swal('Good job!', 'Successfully submitted', "success");
     };
@@ -49,15 +47,7 @@ const RequestForm = ({show, onShow})=>{
         saveAsDraftRequest(requestTemplate);
         swal('Good job!', 'Successfully save as draft', "success");
     };
-    // Add contact function
-    const handleAddFormChange = (event) => {
-        event.preventDefault();
-        const fieldName = event.target.getAttribute('name');
-        const fieldValue = event.target.value;
-        const newFormData = {...addFormData};
-        newFormData[fieldName] = fieldValue;
-        setAddFormData(newFormData);
-    };
+
     return (
         <Modal className="modal fade"  show={show} onHide={onShow} >
             <div className="" role="document">
@@ -86,20 +76,16 @@ const RequestForm = ({show, onShow})=>{
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Requester</label>
                                         <div className="contact-occupation">
-                                            <select
-                                                className="form-control "
-                                            >
-                                                {requesterList.map((requester) => <option id={requester.id}>{requester.fullName}</option>)}
+                                            <select className="form-control"  value={requesterId} onChange={(event)=>setRequesterId(event.target.value)}>
+                                                {requesterList.map((requester) => <option value={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>
                                     </div>
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Project</label>
                                         <div className="contact-occupation">
-                                            <select
-                                                className="form-control "
-                                            >
-                                                {projectList.map((project) => <option id={project.id}>{project.name}</option>)}
+                                            <select className="form-control" value={projectId} onChange={(event)=>setProjectId(event.target.value)}>
+                                                {projectList.map((project) => <option value={project.id}>{project.name}</option>)}
                                             </select>
                                         </div>
                                     </div>
@@ -117,9 +103,7 @@ const RequestForm = ({show, onShow})=>{
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Access</label>
                                         <div className="contact-occupation">
-                                            <select
-                                                className="form-control "
-                                            >
+                                            <select  className="form-control" value={systemAccessId} onChange={(event)=>setSystemAccessId(event.target.value)}>
                                                 {systemAccessList.map((systemAccess) => <option value={systemAccess.id}>{systemAccess.accessPermission}</option>)}
                                             </select>
                                         </div>

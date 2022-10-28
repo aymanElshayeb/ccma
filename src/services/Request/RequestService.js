@@ -174,7 +174,7 @@ export const   fetchAllSystemAccessList = ()=>{
     return ccmaInstance.get('systemAccess/');
 }
 export const submitRequest=(request)=>{
-    ccmaInstance.post('requestAction/submit/',request)
+    ccmaInstance.post('requestAction/submit/',request).catch((reason)=>{console.log("Error occurs", reason)})
 }
 export const saveAsDraftRequest= (request)=>{
     ccmaInstance.post('requestAction/saveAsDraft/',request)

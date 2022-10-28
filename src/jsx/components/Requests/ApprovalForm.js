@@ -85,7 +85,7 @@ const ApprovalForm = ({show, onShow})=>{
                                             <select
                                                 className="form-control "
                                             >
-                                                {requesterList.map((requester) => <option id={requester.id}>{requester.fullName}</option>)}
+                                                {requesterList.map((requester) => <option value={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@ const ApprovalForm = ({show, onShow})=>{
                                             <select
                                                 className="form-control "
                                             >
-                                                {projectList.map((project) => <option id={project.id}>{project.name}</option>)}
+                                                {projectList.map((project) => <option value={project.id}>{project.name}</option>)}
                                             </select>
                                         </div>
                                     </div>
