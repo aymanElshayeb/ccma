@@ -9,7 +9,7 @@ import requestTemplate from "../../../template/request.json"
 
 
 
-const RequestForm = ({show, onShow})=>{
+const RequestForm = ({show, onShow, intialRequest})=>{
 
     const [file, setFile] = React.useState(null);
     const [requesterList, setRequesterList]=useState([{}]);
@@ -17,21 +17,28 @@ const RequestForm = ({show, onShow})=>{
     const [allSystemAccessList, setAllSystemAccessList]=useState([{}]);
     const [systemList, setSystemList]=useState([]);
     const [systemAccessList, setSystemAccessList]=useState([{}]);
-    const [requesterId, setRequesterId] = useState(1);
-    const [projectId, setProjectId] = useState(1);
-    const [systemAccessId, setSystemAccessId] = useState(1);
+    if(!intialRequest){
+        intialRequest={
+            requesterId: 1,
+            projectId:1,
+            systemAccessId:1
+        }
+    }
+    const [request, setRequest]=useState(intialRequest);
 
 
     useEffect(()=>{
         fetchRequesterList().then((response) => {
             const responseList = response.data;
             setRequesterList(responseList);
-            setRequesterId(responseList[0].id);
+            request.requesterId=responseList[0].id;
+            setRequest(request)
         } );
         fetchProjectList().then((response) => {
             const responseList = response.data;
             setProjectList(responseList);
-            setProjectId(responseList[0].id);
+            request.projectId=responseList[0].id;
+            setRequest(request);
         });
         fetchAllSystemAccessList().then((response)=>{
             const responseList = response.data;
@@ -40,7 +47,8 @@ const RequestForm = ({show, onShow})=>{
             setSystemList(systemList);
             let systemAccessList = getSystemAccessList(responseList ,responseList[0].systemName );
             setSystemAccessList(systemAccessList);
-            setSystemAccessId(systemAccessList[0].id);
+            request.systemAccessId=systemAccessList[0].id;
+            setRequest(request);
         });
     },show)
 
@@ -48,9 +56,9 @@ const RequestForm = ({show, onShow})=>{
     const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
-        requestTemplate.requester.id = requesterId;
-        requestTemplate.project.id = projectId;
-        requestTemplate.systemAccess.id= systemAccessId;
+        requestTemplate.requester.id = request.requesterId;
+        requestTemplate.project.id = request.projectId;
+        requestTemplate.systemAccess.id= request.systemAccessId;
         submitRequest(requestTemplate);
         swal('Good job!', 'Successfully submitted', "success");
     };
@@ -89,7 +97,7 @@ const RequestForm = ({show, onShow})=>{
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Requester</label>
                                         <div className="contact-occupation">
-                                            <select className="form-control"  value={requesterId} onChange={(event)=>setRequesterId(event.target.value)}>
+                                            <select className="form-control"  value={request.requesterId} onChange={(event)=>setRequest((prev)=>({...prev, requesterId:event.target.value}))}>
                                                 {requesterList.map((requester) => <option value={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>
@@ -97,7 +105,7 @@ const RequestForm = ({show, onShow})=>{
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Project</label>
                                         <div className="contact-occupation">
-                                            <select className="form-control" value={projectId} onChange={(event)=>setProjectId(event.target.value)}>
+                                            <select className="form-control" value={request.projectId} onChange={(event)=>setRequest((prev)=>({...prev, projectId:event.target.value}))}>
                                                 {projectList.map((project) => <option value={project.id}>{project.name}</option>)}
                                             </select>
                                         </div>
@@ -116,7 +124,7 @@ const RequestForm = ({show, onShow})=>{
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Access</label>
                                         <div className="contact-occupation">
-                                            <select  className="form-control" value={systemAccessId} onChange={(event)=>setSystemAccessId(event.target.value)}>
+                                            <select  className="form-control" value={request.systemAccessId} onChange={(event)=>setRequest((prev)=>({...prev, systemAccessId:event.target.value}))}>
                                                 {systemAccessList.map((systemAccess) => <option value={systemAccess.id}>{systemAccess.accessPermission}</option>)}
                                             </select>
                                         </div>
