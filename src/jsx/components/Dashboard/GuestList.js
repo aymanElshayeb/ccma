@@ -32,6 +32,7 @@ import card8 from "../../../images/task/img8.jpg";
 import RequestForm from "../Requests/RequestForm";
 import ApprovalForm from "../Requests/ApprovalForm";
 import {RequestsListGrid} from "../Requests/RequestsListGrid";
+import {DRAFT, MEMBER, REQUEST_EDITABLE_DRAFT} from "../../../services/Request/RequestService";
 
 const CardListBlog = [
 	{
@@ -95,7 +96,17 @@ const GuestList = () =>{
 
 
 	const [showAddRequest, onShowAddRequest] = useState(false);
-	const [showApporvalRequest, onShowApporvalRequest] = useState(false);
+	const [request, setRequest] =useState({
+		id:1,
+		requesterId: 1,
+		projectId:1,
+		systemId:"JIRA",
+		systemAccessId:1,
+		status: DRAFT,
+		role: MEMBER
+
+	});
+	const [formMode, setFormMode]=useState(REQUEST_EDITABLE_DRAFT);
 	
 	const [selectBtn, setSelectBtn] = useState("Newest");
 	
@@ -177,18 +188,16 @@ const GuestList = () =>{
 			<div className="mb-sm-5 mb-3 d-flex flex-wrap align-items-center text-head">
 				<div className=" mb-2 me-auto">
 				<Link to={"#"} className="btn btn-primary font-w600" onClick={()=> {onShowAddRequest(true)}}>+ New Request</Link>
-				<Link to={"#"} className="btn btn-secondary font-w600" onClick={()=> onShowApporvalRequest(true)}>Approve</Link>
 				</div>
 				{/* <!-- Modal --> */}
-				<RequestForm  show={showAddRequest} onShow={onShowAddRequest} />
-				<ApprovalForm  show={showApporvalRequest} onShow={onShowApporvalRequest} />
+				<RequestForm  show={showAddRequest} onShow={onShowAddRequest} formMode={formMode} setFormMode={setFormMode} request={request} setRequest={setRequest}/>
 				<div>
 					<Link to={"#"} className="btn btn-secondary btn-sm me-3"> <i className="fas fa-envelope"></i></Link>
 					<Link to={"#"} className="btn btn-secondary btn-sm me-3"><i className="fas fa-phone-alt"></i></Link>
 					<Link to={"#"} className="btn btn-primary btn-sm"><i className="fas fa-info"></i></Link>
 				</div>
 			</div>
-			<RequestsListGrid/>
+			<RequestsListGrid onShow={onShowAddRequest} request={request} setRequest={setRequest} setFormMode={setFormMode}/>
 		</>
 	)
 }

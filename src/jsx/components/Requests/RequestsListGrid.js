@@ -5,38 +5,13 @@ import moment from "moment/moment";
 import FilteredRequestListGrid from "./FilteredRequestListGrid";
 import {COMPLETED, DRAFT, fetchRequestList, PENDING, READY} from "../../../services/Request/RequestService";
 
-
-
-const DropdownRequest = (props) =>{
-    return(
-        <>
-            <Dropdown className="dropdown">
-                <Dropdown.Toggle as="div" className="btn-link i-false" data-bs-toggle="dropdown" aria-expanded="false">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12Z" stroke="#262626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12Z" stroke="#262626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12Z" stroke="#262626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="dropdown-menu">
-                    <Dropdown.Item className="dropdown-item" >Approve</Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item">Execute</Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item">Edit</Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item">Archive</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-        </>
-    )
-}
-
-const RequestsListGrid = ()=>{
+const RequestsListGrid = ({request, setRequest, setFormMode, onShow})=>{
 
     const [selectBtn, setSelectBtn] = useState("Newest");
 
     const [requestsList, setRequestsList] = useState([]);
     const [requestsDraftList, setRequestsDraftList] = useState([]);
     const [requestsPendingList, setRequestsPendingList] = useState([]);
-    const [requestsReadyList, setRequestsReadyList] = useState([]);
     const [requestsCompletedList, setRequestsCompletedList] = useState([]);
 
     const [data, setData] = useState(
@@ -54,16 +29,18 @@ const RequestsListGrid = ()=>{
             }
         }
     };
+
     // use effect
     useEffect(() => {
         setData(document.querySelectorAll("#example2_wrapper tbody tr"));
-        fetchRequestList().then((response)=> setRequestsList(response.data));
-
-        setRequestsDraftList(requestsList.filter((request)=> request.status === DRAFT));
-        setRequestsPendingList(requestsList.filter((request)=> request.status === PENDING));
-        setRequestsReadyList(requestsList.filter((request)=> request.status === READY));
-        setRequestsCompletedList(requestsList.filter((request)=> request.status === COMPLETED));
-    }, []);
+        fetchRequestList().then((response)=> {
+            const responseList = response.data;
+            setRequestsList(responseList);
+            setRequestsDraftList(responseList.filter((request)=> request.status === DRAFT));
+            setRequestsPendingList(responseList.filter((request)=> request.status === PENDING));
+            setRequestsCompletedList(responseList.filter((request)=> request.status === COMPLETED));
+        });
+    },[]);
 
 
     // Active pagginarion
@@ -129,9 +106,7 @@ const RequestsListGrid = ()=>{
                         <Nav.Item as="li" className="nav-item">
                             <Nav.Link className="nav-link" eventKey="Pending">Pending</Nav.Link>
                         </Nav.Item>
-                        <Nav.Item as="li" className="nav-item">
-                            <Nav.Link className="nav-link" eventKey="Ready">Ready</Nav.Link>
-                        </Nav.Item>
+
                         <Nav.Item as="li" className="nav-item">
                             <Nav.Link className="nav-link" eventKey="Completed">Completed</Nav.Link>
                         </Nav.Item>
@@ -201,19 +176,16 @@ const RequestsListGrid = ()=>{
                         <div className="card-body p-0">
                             <Tab.Content>
                                 <Tab.Pane eventKey="All">
-                                    <FilteredRequestListGrid requestLists = {requestsList} />
+                                    <FilteredRequestListGrid requestLists = {requestsList} request={request} setRequest={setRequest} setFormMode={setFormMode} onShow={onShow}/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Draft">
-                                    <FilteredRequestListGrid requestLists = {requestsDraftList} />
+                                    <FilteredRequestListGrid requestLists = {requestsDraftList} request={request} setRequest={setRequest} setFormMode={setFormMode} onShow={onShow}/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Pending">
-                                    <FilteredRequestListGrid requestLists = {requestsPendingList} />
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="Ready">
-                                    <FilteredRequestListGrid requestLists = {requestsReadyList} />
+                                    <FilteredRequestListGrid requestLists = {requestsPendingList} request={request} setRequest={setRequest} setFormMode={setFormMode} onShow={onShow}/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="Completed">
-                                    <FilteredRequestListGrid requestLists = {requestsCompletedList} />
+                                    <FilteredRequestListGrid requestLists = {requestsCompletedList} request={request} setRequest={setRequest} setFormMode={setFormMode} onShow={onShow}/>
                                 </Tab.Pane>
                             </Tab.Content>
                         </div>
@@ -223,4 +195,4 @@ const RequestsListGrid = ()=>{
         </Tab.Container>
     );
 }
-export    {RequestsListGrid, DropdownRequest};
+export    {RequestsListGrid};

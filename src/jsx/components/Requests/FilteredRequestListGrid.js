@@ -1,8 +1,8 @@
 import React,{ useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import {DropdownRequest} from './RequestsListGrid';
 
-const FilteredRequestListGrid = ({requestLists}) =>{
+
+const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode, onShow}) =>{
 	const [data, setData] = useState(
 		document.querySelectorAll("#pending_wrapper tbody tr")
 	);
@@ -80,50 +80,59 @@ const FilteredRequestListGrid = ({requestLists}) =>{
 								<th className="sorting_asc">ID</th>
 								<th className="sorting">requester</th>
 								<th className="sorting">Project</th>
-								<th className="sorting">SVN Access</th>
-								<th className="sorting">Jira Access</th>
+								<th className="sorting">System</th>
+								<th className="sorting">Permission</th>
 								<th className="sorting">Status</th>
 								<th className="sorting">creationDate</th>
-								<th className="sorting bg-none"></th>
 							</tr>
 						</thead>
 						<tbody>
-						{ requestLists.map((request, index)=> {
+						{ requestLists.map((localRequest, index)=> {
 							const requestEntries =(<>
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.id}</h5>
+												<Link to={"#"}  onClick={()=>{
+
+													const tempRequest= {id: localRequest.id,requesterId: localRequest.requester.id, projectId: localRequest.project.id, systemAccessId: localRequest.systemAccess.id, systemId: localRequest.systemAccess.systemName  };
+													onShow(true);
+													setRequest(tempRequest);
+													console.log("request after modification", request);
+
+
+												}}>
+												<h5 className="text-nowrap">{localRequest.id}</h5>
+												</Link>
 											</div>
 										</td>
 
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.requester.fullName}</h5>
+												<h5 className="text-nowrap">{localRequest.requester.fullName}</h5>
 											</div>
 										</td>
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.project.name}</h5>
+												<h5 className="text-nowrap">{localRequest.project.name}</h5>
 											</div>
 										</td>
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.systemAccess.systemName=="JIRA"? request.systemAccess.accessPermission:""}</h5>
+												<h5 className="text-nowrap">{localRequest.systemAccess.systemName}</h5>
 											</div>
 										</td>
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.systemAccess.systemName=="SVN"? request.systemAccess.accessPermission:""}</h5>
+												<h5 className="text-nowrap">{localRequest.systemAccess.accessPermission}</h5>
 											</div>
 										</td>
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.status}</h5>
+												<h5 className="text-nowrap">{localRequest.status}</h5>
 											</div>
 										</td>
 										<td>
 											<div>
-												<h5 className="text-nowrap">{request.creationDate}</h5>
+												<h5 className="text-nowrap">{localRequest.creationDate}</h5>
 											</div>
 										</td>
 							</>);
@@ -138,7 +147,7 @@ const FilteredRequestListGrid = ({requestLists}) =>{
 										</div>
 									</td>
 									{requestEntries}
-									<td><DropdownRequest/></td>
+
 								</tr>
 							</>)
 							}

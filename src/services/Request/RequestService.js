@@ -2,9 +2,40 @@ import {ccmaInstance} from "../CcmaInstance";
 
 export const DRAFT = "DRAFT";
 export const PENDING ="PENDING";
-export const READY ="READY";
 export const COMPLETED ="COMPLETED";
+export const READY ="READY";
 
+export const MEMBER = "MEMBER"
+export const MANAGER ="MANGER"
+
+export const REQUEST_READABLE_DRAFT = {
+    editable:false,
+    isSaveAsDraftActive: true,
+    isSubmitActive:true,
+    isReturnToRequester:false,
+    isExecuteActive:false
+};
+export const REQUEST_EDITABLE_DRAFT = {
+    editable:true,
+    isSaveAsDraftActive: true,
+    isSubmitActive:true,
+    isReturnToRequester:false,
+    isApproveActive:false
+};
+export const REQUEST_EDITABLE_PENDING = {
+    editable:true,
+    isSaveAsDraftActive: false,
+    isSubmitActive:false,
+    isReturnToRequester:true,
+    isApproveActive:true
+};
+export const REQUEST_READABLE = {
+    editable:false,
+    isSaveAsDraftActive: false,
+    isSubmitActive:false,
+    isReturnToRequester:false,
+    isApproveActive:false
+};
 const requestList = [
     {
         "id": 1,
@@ -181,11 +212,11 @@ export const saveAsDraftRequest= (request)=>{
 }
 
 
-const executeRequest= (request)=>{
+export const approveRequest= (request)=>{
     ccmaInstance.post('requestAction/execute/',request)
 }
 
-const returnRequest= (request)=>{
+export const returnToRequester= (request)=>{
     ccmaInstance.post('requestAction/returnToRequester/',request)
 }
 export const getSystemList =(SystemAccessList)=>{
