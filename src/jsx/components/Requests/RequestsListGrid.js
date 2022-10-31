@@ -5,7 +5,7 @@ import moment from "moment/moment";
 import FilteredRequestListGrid from "./FilteredRequestListGrid";
 import {COMPLETED, DRAFT, fetchRequestList, PENDING, READY} from "../../../services/Request/RequestService";
 
-const RequestsListGrid = ({request, setRequest, setFormMode, onShow})=>{
+const RequestsListGrid = ({request, setRequest, setFormMode, refresh, onShow})=>{
 
     const [selectBtn, setSelectBtn] = useState("Newest");
 
@@ -40,7 +40,7 @@ const RequestsListGrid = ({request, setRequest, setFormMode, onShow})=>{
             setRequestsPendingList(responseList.filter((request)=> request.status === PENDING));
             setRequestsCompletedList(responseList.filter((request)=> request.status === COMPLETED));
         });
-    },[]);
+    },[refresh]);
 
 
     // Active pagginarion

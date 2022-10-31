@@ -197,7 +197,7 @@ const GuestList = () =>{
 					<Link to={"#"} className="btn btn-primary btn-sm"><i className="fas fa-info"></i></Link>
 				</div>
 			</div>
-			<RequestsListGrid onShow={onShowAddRequest} request={request} setRequest={setRequest} setFormMode={setFormMode}/>
+			<RequestsListGrid onShow={onShowAddRequest} request={request} setRequest={setRequest} setFormMode={setFormMode} refresh={showAddRequest}/>
 		</>
 	)
 }
