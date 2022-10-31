@@ -220,17 +220,10 @@ export const returnToRequester= (request)=>{
     ccmaInstance.post('requestAction/returnToRequester/',request)
 }
 export const getSystemList =(SystemAccessList)=>{
-    console.log("getSystemList ");
-    console.log( SystemAccessList);
     return SystemAccessList.map((systemAccess)=>systemAccess.systemName).filter((value, index, self)=>  self.indexOf(value) === index);
     }
 
 export const getSystemAccessList =(systemAccessList, systemName)=>{
-    console.log("getSystemAccessList");
-    console.log(systemAccessList );
-    console.log("systemName");
-    console.log(systemName)
-
      return systemAccessList.filter((systemAccess)=> systemAccess.systemName ===systemName);
 }
 

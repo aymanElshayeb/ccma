@@ -141,8 +141,9 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
                                         <div className="contact-occupation">
                                             <select
                                                 className="form-control" disabled={!formMode.editable} value={request.systemId} onChange={(event)=>{
-                                                    setRequest((prev)=>({...prev, systemId:event.target.value}));
-                                                    setSystemAccessList(getSystemAccessList(allSystemAccessList, event.target.value));}}
+                                                    const selectedSystemAccessList = getSystemAccessList(allSystemAccessList, event.target.value);
+                                                    setRequest((prev)=>({...prev, systemId:event.target.value, systemAccessId: selectedSystemAccessList[0].id}));
+                                                    setSystemAccessList(selectedSystemAccessList);}}
                                             >
                                                 {systemList.map((system) => <option key={system} value={system}>{system}</option>)}
                                             </select>
