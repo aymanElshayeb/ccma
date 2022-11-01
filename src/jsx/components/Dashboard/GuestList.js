@@ -97,7 +97,6 @@ const GuestList = () =>{
 
 	const [showAddRequest, onShowAddRequest] = useState(false);
 	const [request, setRequest] =useState({
-		id:1,
 		requesterId: 1,
 		projectId:1,
 		systemId:"JIRA",
@@ -107,9 +106,9 @@ const GuestList = () =>{
 
 	});
 	const [formMode, setFormMode]=useState(REQUEST_EDITABLE_DRAFT);
-	
+
 	const [selectBtn, setSelectBtn] = useState("Newest");
-	
+
 	const [data, setData] = useState(
 		document.querySelectorAll("#example2_wrapper tbody tr")
 	);
@@ -133,7 +132,7 @@ const GuestList = () =>{
       //chackboxFun();
 	}, []);
 
-  
+
    // Active pagginarion
    activePag.current === 0 && chageData(0, sort);
    // paggination
@@ -148,7 +147,7 @@ const GuestList = () =>{
 		//settest(i);
 	};
 
-   
+
 	const chackbox = document.querySelectorAll(".sorting_1 input");
 	const motherChackBox = document.querySelector(".sorting_asc input");
    // console.log(document.querySelectorAll(".sorting_1 input")[0].checked);
@@ -171,7 +170,7 @@ const GuestList = () =>{
          }
       }
    };
-   
+
 	   const [state, setState] = useState({
 		  start: moment().subtract(29, 'days'),
 		  end: moment(),
@@ -182,7 +181,7 @@ const GuestList = () =>{
 		};
 		const label =
       start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
-	  
+
 	return(
 		<>
 			<div className="mb-sm-5 mb-3 d-flex flex-wrap align-items-center text-head">
