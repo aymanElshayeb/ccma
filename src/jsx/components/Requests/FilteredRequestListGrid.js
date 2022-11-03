@@ -2,10 +2,10 @@ import React,{ useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import {getRole, saveRole} from "../../../services/AuthService";
 import {
-	DRAFT,PENDING,COMPLETED,
+	DRAFT, PENDING, COMPLETED,
 	REQUEST_EDITABLE_DRAFT,
 	REQUEST_EDITABLE_PENDING, REQUEST_READABLE,
-	REQUEST_READABLE_DRAFT
+	REQUEST_READABLE_DRAFT, MANAGER,ADMIN,MEMBER
 } from "../../../services/Request/RequestService";
 
 
@@ -72,8 +72,7 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
 
 	function getMode(requestStatus) {
 		const role=getRole()
-		requestStatus=PENDING;
-		if (role =="member"){
+		if (role ==MEMBER){
 			if(requestStatus==DRAFT || requestStatus=="")
 			     setFormMode(REQUEST_EDITABLE_DRAFT);
 			else if(requestStatus==COMPLETED)
@@ -81,13 +80,13 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
 			else if (requestStatus==PENDING)
 				setFormMode(REQUEST_READABLE_DRAFT);
 
-		}else if(role =="manager"){
+		}else if(role ==MANAGER){
 			if(requestStatus==DRAFT)
 				setFormMode(REQUEST_EDITABLE_DRAFT);
 			else if(requestStatus==PENDING)
 				setFormMode(REQUEST_EDITABLE_PENDING);
 
-		}else if (role=="admin"){
+		}else if (role==ADMIN){
 			if(requestStatus==DRAFT)
 				setFormMode(REQUEST_EDITABLE_DRAFT);
 			else if(requestStatus==PENDING)
