@@ -1,5 +1,12 @@
 import React,{ useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
+import {getRole, saveRole} from "../../../services/AuthService";
+import {
+	DRAFT,PENDING,COMPLETED,
+	REQUEST_EDITABLE_DRAFT,
+	REQUEST_EDITABLE_PENDING, REQUEST_READABLE,
+	REQUEST_READABLE_DRAFT
+} from "../../../services/Request/RequestService";
 
 
 const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode, onShow}) =>{
@@ -62,6 +69,34 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
          }
       }
     };
+
+	function getMode(requestStatus) {
+		const role=getRole()
+		requestStatus=PENDING;
+		if (role =="member"){
+			if(requestStatus==DRAFT || requestStatus=="")
+			     setFormMode(REQUEST_EDITABLE_DRAFT);
+			else if(requestStatus==COMPLETED)
+				 setFormMode(REQUEST_READABLE);
+			else if (requestStatus==PENDING)
+				setFormMode(REQUEST_READABLE_DRAFT);
+
+		}else if(role =="manager"){
+			if(requestStatus==DRAFT)
+				setFormMode(REQUEST_EDITABLE_DRAFT);
+			else if(requestStatus==PENDING)
+				setFormMode(REQUEST_EDITABLE_PENDING);
+
+		}else if (role=="admin"){
+			if(requestStatus==DRAFT)
+				setFormMode(REQUEST_EDITABLE_DRAFT);
+			else if(requestStatus==PENDING)
+				setFormMode(REQUEST_EDITABLE_PENDING);
+
+		}
+
+	}
+
 	return(
 		<>
 			<div className="table-responsive">
@@ -93,10 +128,14 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
 											<div>
 												<Link to={"#"}  onClick={()=>{
 
-													const tempRequest= {id: localRequest.id,requesterId: localRequest.requester.id, projectId: localRequest.project.id, systemAccessId: localRequest.systemAccess.id, systemId: localRequest.systemAccess.systemName  };
-													onShow(true);
+													const tempRequest= {id: localRequest.id,requesterId: localRequest.requester.id, projectId: localRequest.project.id, systemAccessId: localRequest.systemAccess.id, systemId: localRequest.systemAccess.systemName };
 													setRequest(tempRequest);
 													console.log("request after modification", request);
+
+
+													getMode(localRequest.status);
+													onShow(true);
+
 
 
 												}}>
