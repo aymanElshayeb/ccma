@@ -56,6 +56,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
         new Date().getTime() + tokenDetails.expiresIn * 1000,
     );
+    saveRole("manager")
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
@@ -85,4 +86,16 @@ export function checkAutoLogin(dispatch, history) {
 
     const timer = expireDate.getTime() - todaysDate.getTime();
     runLogoutTimer(dispatch, timer, history);
+}
+
+
+
+export function saveRole(role) {
+    localStorage.setItem('userRole', JSON.stringify(role));
+}
+
+
+export function getRole() {
+   const role= localStorage.getItem('userRole');
+   return JSON.parse(role);
 }
