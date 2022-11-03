@@ -84,6 +84,15 @@ function Register(props) {
                         />
                       </div>
 					  {errors.email && <div>{errors.email}</div>}
+
+
+                        <label id="role" className="mb-1 "><strong>Role</strong></label>
+                        <select name="role" id="role" className="form-control">
+                            <option value="Member">Member</option>
+                            <option value="Project">Project</option>
+                        </select>
+
+
                       <div className="form-group mb-3">
                         <label className="mb-1 ">
                           <strong>Password</strong>
