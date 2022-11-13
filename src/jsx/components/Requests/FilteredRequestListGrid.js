@@ -15,7 +15,7 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
 	);
 	const sort = 10;
 	const activePag = useRef(0);
-	
+
 
 	// Active data
 	const chageData = (frist, sec) => {
@@ -32,7 +32,7 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
       setData(document.querySelectorAll("#pending_wrapper tbody tr"));
 	}, []);
 
-  
+
    // Active pagginarion
    activePag.current === 0 && chageData(0, sort);
    // paggination
@@ -44,10 +44,10 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
 	const onClick = (i) => {
 		activePag.current = i;
 		chageData(activePag.current * sort, (activePag.current + 1) * sort);
-		
+
 	};
 
-   
+
 	const chackbox = document.querySelectorAll(".sorting_2 input");
 	const motherChackBox = document.querySelector(".sorting_asc_2 input");
 	const chackboxFun = (type) => {

@@ -4,6 +4,7 @@ import {
     loginConfirmedAction,
     logout,
 } from '../store/actions/AuthActions';
+import {MANAGER} from "./Request/RequestService";
 
 export function signUp(email, password) {
     //axios call
@@ -56,7 +57,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
         new Date().getTime() + tokenDetails.expiresIn * 1000,
     );
-    saveRole("manager")
+    saveRole(MANAGER)
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
