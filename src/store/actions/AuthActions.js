@@ -42,18 +42,13 @@ export function logout(history) {
     };
 }
 
-export function loginAction(email, password, history) {
+export function loginAction(username, password, history) {
     return (dispatch) => {
-        login(email, password)
+        login(username, password)
             .then((response) => {
-                saveTokenInLocalStorage(response.data);
-                runLogoutTimer(
-                    dispatch,
-                    response.data.expiresIn * 1000,
-                    history,
-                );
+
                 dispatch(loginConfirmedAction(response.data));
-				history.push('/dashboard');                
+				history.push('/dashboard');
             })
             .catch((error) => {
 				//console.log(error);

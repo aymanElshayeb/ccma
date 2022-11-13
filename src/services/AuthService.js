@@ -4,6 +4,8 @@ import {
     loginConfirmedAction,
     logout,
 } from '../store/actions/AuthActions';
+import {MANAGER} from "./Request/RequestService";
+import {ccmaInstance} from "./CcmaInstance";
 
 export function signUp(email, password) {
     //axios call
@@ -18,16 +20,17 @@ export function signUp(email, password) {
     );
 }
 
-export function login(email, password) {
-    const postData = {
-        email,
-        password,
-        returnSecureToken: true,
-    };
-    return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
-        postData,
-    );
+export function login(username, password) {
+
+
+    return ccmaInstance.get(
+        'login/',
+        {
+            auth:   {
+                username,
+                password,
+            }
+        });
 }
 
 export function formatError(errorResponse) {
@@ -56,6 +59,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
         new Date().getTime() + tokenDetails.expiresIn * 1000,
     );
+    saveRole(MANAGER)
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
@@ -85,4 +89,16 @@ export function checkAutoLogin(dispatch, history) {
 
     const timer = expireDate.getTime() - todaysDate.getTime();
     runLogoutTimer(dispatch, timer, history);
+}
+
+
+
+export function saveRole(role) {
+    localStorage.setItem('userRole', JSON.stringify(role));
+}
+
+
+export function getRole() {
+   const role= localStorage.getItem('userRole');
+   return JSON.parse(role);
 }
