@@ -21,7 +21,7 @@ export function signupAction(email, password, history) {
             saveTokenInLocalStorage(response.data);
             runLogoutTimer(
                 dispatch,
-                response.data.expiresIn * 1000,
+                30*60 * 1000,
                 history,
             );
             dispatch(confirmedSignupAction(response.data));
@@ -46,7 +46,12 @@ export function loginAction(username, password, history) {
     return (dispatch) => {
         login(username, password)
             .then((response) => {
-
+                saveTokenInLocalStorage(response.data);
+                runLogoutTimer(
+                    dispatch,
+                   30*60* 1000,
+                    history,
+                );
                 dispatch(loginConfirmedAction(response.data));
 				history.push('/dashboard');
             })

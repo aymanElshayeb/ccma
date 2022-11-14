@@ -75,6 +75,9 @@ function Login (props) {
 												className="form-control"
 												value={username}
 												placeholder="username"
+												onChange={(e) =>
+													setUsername(e.target.value)
+												}
 											/>
 										</div>
 										<div className="form-group mb-3">

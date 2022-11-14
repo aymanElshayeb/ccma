@@ -22,7 +22,6 @@ export function signUp(email, password) {
 
 export function login(username, password) {
 
-
     return ccmaInstance.get(
         'login/',
         {
@@ -57,9 +56,8 @@ export function formatError(errorResponse) {
 
 export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
-        new Date().getTime() + tokenDetails.expiresIn * 1000,
+        new Date().getTime() + (30*60*1000) ,
     );
-    saveRole(MANAGER)
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
