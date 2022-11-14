@@ -12,7 +12,7 @@ import {
     saveAsDraftRequest,
     DRAFT, MEMBER, REQUEST_EDITABLE_DRAFT, REQUEST_READABLE, approveRequest, returnToRequester, REQUEST_EDITABLE_PENDING
 } from "../../../services/Request/RequestService";
-import requestTemplate from "../../../template/request.json"
+import requestTemplate from "../../../template/request.json";
 
 const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})=>{
 
@@ -98,6 +98,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
         <Modal className="modal fade"  show={show} onHide={onShow} >
             <div className="" role="document">
                 <div className="">
+
                     <form >
                         <div className="modal-header">
                             <h4 className="modal-title fs-20">Access Request</h4>

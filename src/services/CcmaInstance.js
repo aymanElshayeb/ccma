@@ -3,14 +3,34 @@ import ccmaCofig from "../ccmaConfig.json"
 export const ccmaInstance = axios.create({
     baseURL: ccmaCofig.baseURL
 });
-ccmaInstance.interceptors.request.use(request => {
+
+export function utf8_to_b64(str) {
+    return window.btoa(unescape(encodeURIComponent(str)));
+}
+
+export  function b64_to_utf8(str) {
+    return decodeURIComponent(escape(window.atob(str)));
+}
+ccmaInstance.interceptors.request.use(config => {
     if(ccmaCofig.LOG_LEVEL==="INFO"){
-        console.log('Starting Request: URL ', request.url, 'method', request.method);
+        console.log('Starting Request: URL ', config.url, 'method', config.method);
     } else if(ccmaCofig.LOG_LEVEL==="DEBUG"){
-        console.log('Starting Request', JSON.stringify(request, null, 2))
+        console.log('Starting Request', JSON.stringify(config, null, 2))
+    }
+    let userDetails = localStorage.getItem('userDetails')
+    if(userDetails){
+        userDetails = JSON.parse(userDetails);
+    }
+    if(userDetails && userDetails.token){
+        let encryptedToken = userDetails.token;
+        let jsonToken = JSON.parse(b64_to_utf8(encryptedToken));
+        config = {...config, auth:{
+            username: jsonToken.username,
+                password: jsonToken.password
+            }}
     }
 
-    return request
+    return config
 })
 
 ccmaInstance.interceptors.response.use(response => {
