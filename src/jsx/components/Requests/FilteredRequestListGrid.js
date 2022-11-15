@@ -70,15 +70,17 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
       }
     };
 
-	function getMode(requestStatus) {
+function getMode(requestStatus) {
 		const role=getRole()
+
 		if (role ==MEMBER){
 			if(requestStatus==DRAFT || requestStatus=="")
 			     setFormMode(REQUEST_EDITABLE_DRAFT);
 			else if(requestStatus==COMPLETED)
 				 setFormMode(REQUEST_READABLE);
 			else if (requestStatus==PENDING)
-				setFormMode(REQUEST_READABLE_DRAFT);
+				setFormMode(REQUEST_READABLE);
+
 
 		}else if(role ==MANAGER){
 			if(requestStatus==DRAFT)

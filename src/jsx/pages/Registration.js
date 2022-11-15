@@ -10,10 +10,15 @@ import {
 import logo from "../../images/Logo.svg";
 
 function Register(props) {
-    const [email, setEmail] = useState('');
-    let errorsObj = { email: '', password: '' };
+    const [username, setUsername] = useState('nabil');
+    const [email, setEmail] = useState('nabilmokhtar15@gmail.com');
+    const [password, setPassword] = useState('poiuytrewq');
+    const [fullName, setFullName] = useState('nabil mokhtar');
+    // const [role, setRole] = useState('');
+
+    let errorsObj = { username: '', password: '' ,email:'',fullName:''};
     const [errors, setErrors] = useState(errorsObj);
-    const [password, setPassword] = useState('');
+
 
     const dispatch = useDispatch();
 
@@ -21,20 +26,35 @@ function Register(props) {
         e.preventDefault();
         let error = false;
         const errorObj = { ...errorsObj };
-        if (email === '') {
-            errorObj.email = 'Email is Required';
+        if (username === '') {
+            errorObj.username = 'username is Required';
             error = true;
-			swal('Oops', errorObj.email, "error");
+			swal('Oops', errorObj.username, "error");
         }
         if (password === '') {
             errorObj.password = 'Password is Required';
             error = true;
 			swal('Oops', errorObj.password, "error");
         }
+        if (email === '') {
+            errorObj.email = 'Email is Required';
+            error = true;
+            swal('Oops', errorObj.email, "error");
+        }
+        if (fullName === '') {
+            errorObj.email = 'FullName is Required';
+            error = true;
+            swal('Oops', errorObj.fullName, "error");
+        }
+        // if (role === '') {
+        //     errorObj.role = 'Role is Required';
+        //     error = true;
+        //     swal('Oops', errorObj.role, "error");
+        // }
         setErrors(errorObj);
         if (error) return;
         dispatch(loadingToggleAction(true));
-        dispatch(signupAction(email, password, props.history));
+        dispatch(signupAction(username, password,email,fullName, props.history));
     }
   return (
     <div className="authincation h-100 p-meddle">
@@ -62,6 +82,7 @@ function Register(props) {
 						</div>
 					)}
                     <form onSubmit={onSignUp}>
+
                       <div className="form-group mb-3">
                         <label className="mb-1 ">
                           <strong>Username</strong>
@@ -69,9 +90,13 @@ function Register(props) {
                         <input
                           type="text"
                           className="form-control"
+                          onChange={(e) => setUsername(e.target.value)}
                           placeholder="username"
+                          defaultValue={username}
                         />
                       </div>
+                        {errors.username && <div>{errors.username}</div>}
+
                       <div className="form-group mb-3">
                         <label className="mb-1 ">
                           <strong>Email</strong>
@@ -85,12 +110,39 @@ function Register(props) {
                       </div>
 					  {errors.email && <div>{errors.email}</div>}
 
+                        {/*<div className="form-group mb-3">*/}
+                        {/*    <label className="mb-1 ">*/}
+                        {/*        <strong>Role</strong>*/}
+                        {/*    </label>*/}
+                        {/*    <input*/}
 
-                        <label id="role" className="mb-1 "><strong>Role</strong></label>
-                        <select name="role" id="role" className="form-control">
-                            <option value="Member">Member</option>
-                            <option value="Project">Project</option>
-                        </select>
+                        {/*        onChange={(e) => setRole(e.target.value)}*/}
+                        {/*        className="form-control"*/}
+                        {/*        placeholder="Role"*/}
+                        {/*    />*/}
+                        {/*</div>*/}
+                        {/*{errors.role && <div>{errors.role}</div>}*/}
+
+
+                        <div className="form-group mb-3">
+                            <label className="mb-1 ">
+                                <strong>Full Name</strong>
+                            </label>
+                            <input
+
+                                onChange={(e) => setFullName(e.target.value)}
+                                className="form-control"
+                                placeholder="full name"
+                                defaultValue={fullName}
+                            />
+                        </div>
+                        {errors.fullName && <div>{errors.fullName}</div>}
+
+                        {/*<label id="role" className="mb-1 "><strong>Role</strong></label>*/}
+                        {/*<select name="role" id="role" className="form-control">*/}
+                        {/*    <option value="Member">Member</option>*/}
+                        {/*    <option value="Project">Project</option>*/}
+                        {/*</select>*/}
 
 
                       <div className="form-group mb-3">
@@ -104,10 +156,11 @@ function Register(props) {
 							}
 							className="form-control"
 							placeholder="password"
-                          //defaultValue="Password"
+
                         />
                       </div>
 					  {errors.password && <div>{errors.password}</div>}
+
                       <div className="text-center mt-4">
                         <button
                           type="submit"

@@ -4,19 +4,22 @@ import {
     loginConfirmedAction,
     logout,
 } from '../store/actions/AuthActions';
-import {MANAGER} from "./Request/RequestService";
+import {MANAGER, MEMBER} from "./Request/RequestService";
 
 import {ccmaInstance} from "./CcmaInstance";
 
-export function signUp(email, password) {
+export function signUp(username, password,email,fullName,role=MEMBER) {
     //axios call
     const postData = {
-        email,
-        password,
-        returnSecureToken: true,
+        "email":email,
+        "password":password,
+        "role":role,
+        "full_name":fullName,
+        "user_name":username
+
     };
-    return axios.post(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD3RPAp3nuETDn9OQimqn_YF6zdzqWITII`,
+    return ccmaInstance.post(
+        'requester/register',
         postData,
     );
 }
@@ -60,7 +63,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
         new Date().getTime() + (30*60*1000) ,
     );
 
-    saveRole(MANAGER)
+    saveRole(tokenDetails.role)
 
 
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));

@@ -15,9 +15,9 @@ export const LOGIN_FAILED_ACTION = '[login action] failed login';
 export const LOADING_TOGGLE_ACTION = '[Loading action] toggle loading';
 export const LOGOUT_ACTION = '[Logout action] logout action';
 
-export function signupAction(email, password, history) {
+export function signupAction(username, password,email,role,fullName, history) {
     return (dispatch) => {
-        signUp(email, password)
+        signUp(username, password,email,fullName)
         .then((response) => {
             saveTokenInLocalStorage(response.data);
             runLogoutTimer(
