@@ -5,6 +5,7 @@ import {
     saveTokenInLocalStorage,
     signUp,
 } from '../../services/AuthService';
+import {utf8_to_b64} from "../../services/CcmaInstance";
 
 
 export const SIGNUP_CONFIRMED_ACTION = '[signup action] confirmed signup';
@@ -21,7 +22,7 @@ export function signupAction(email, password, history) {
             saveTokenInLocalStorage(response.data);
             runLogoutTimer(
                 dispatch,
-                response.data.expiresIn * 1000,
+                30*60 * 1000,
                 history,
             );
             dispatch(confirmedSignupAction(response.data));
@@ -42,22 +43,30 @@ export function logout(history) {
     };
 }
 
-export function loginAction(email, password, history) {
+export function loginAction(username, password, history) {
     return (dispatch) => {
-        login(email, password)
+        login(username, password)
             .then((response) => {
-                saveTokenInLocalStorage(response.data);
+                let userDetails = response.data;
+                let tokenJson = {
+                    "username": username,
+                    "password": password
+                }
+                userDetails ={
+                    ...userDetails, token:utf8_to_b64(JSON.stringify(tokenJson))
+                }
+                saveTokenInLocalStorage(userDetails);
                 runLogoutTimer(
                     dispatch,
-                    response.data.expiresIn * 1000,
+                   30*60* 1000,
                     history,
                 );
-                dispatch(loginConfirmedAction(response.data));
-				history.push('/dashboard');                
+                dispatch(loginConfirmedAction(userDetails));
+				history.push('/dashboard');
             })
             .catch((error) => {
-				//console.log(error);
-                const errorMessage = formatError(error.response.data);
+				console.log(error);
+                const errorMessage = formatError(error.message);
                 dispatch(loginFailedAction(errorMessage));
             });
     };

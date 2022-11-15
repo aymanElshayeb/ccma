@@ -5,7 +5,7 @@ import {
 	DRAFT, PENDING, COMPLETED,
 	REQUEST_EDITABLE_DRAFT,
 	REQUEST_EDITABLE_PENDING, REQUEST_READABLE,
-	REQUEST_READABLE_DRAFT, MANAGER,ADMIN,MEMBER
+	REQUEST_READABLE_DRAFT, MANAGER,MEMBER
 } from "../../../services/Request/RequestService";
 
 
@@ -86,7 +86,8 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
 			else if(requestStatus==PENDING)
 				setFormMode(REQUEST_EDITABLE_PENDING);
 
-		}else if (role==ADMIN){
+
+		}else if (role==MANAGER){
 			if(requestStatus==DRAFT)
 				setFormMode(REQUEST_EDITABLE_DRAFT);
 			else if(requestStatus==PENDING)

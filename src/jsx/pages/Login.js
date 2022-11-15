@@ -9,10 +9,10 @@ import logo from "../../images/Logo.svg";
 import loginbg from "../../images/pic1.png";
 
 function Login (props) {
-  const [email, setEmail] = useState('demo@example.com');
-    let errorsObj = { email: '', password: '' };
+  const [username, setUsername] = useState('elshayeb');
+    let errorsObj = { username: '', password: '' };
     const [errors, setErrors] = useState(errorsObj);
-    const [password, setPassword] = useState('123456');
+    const [password, setPassword] = useState('password123');
 
     const dispatch = useDispatch();
 
@@ -20,8 +20,8 @@ function Login (props) {
         e.preventDefault();
         let error = false;
         const errorObj = { ...errorsObj };
-        if (email === '') {
-            errorObj.email = 'Email is Required';
+        if (username === '') {
+            errorObj.username = 'username is Required';
             error = true;
         }
         if (password === '') {
@@ -32,8 +32,8 @@ function Login (props) {
         if (error) {
 			return ;
 		}
-		dispatch(loadingToggleAction(true));	
-        dispatch(loginAction(email, password, props.history));
+		dispatch(loadingToggleAction(true));
+        dispatch(loginAction(username, password, props.history));
     }
 
   return (
@@ -67,15 +67,18 @@ function Login (props) {
 									<form onSubmit={onLogin}  className="form-validate">
 										<h3 className="text-center mb-4 text-black">Sign in your account</h3>
 										<div className="form-group mb-3">
-											<label className="mb-1"  htmlFor="val-email"><strong>Email</strong></label>
-											<div>
-												<input type="email" className="form-control"
-													value={email}
-												   onChange={(e) => setEmail(e.target.value)}
-												   placeholder="Type Your Email Address"
-												/>
-											</div>
-											{errors.email && <div className="text-danger fs-12">{errors.email}</div>}
+											<label className="mb-1 ">
+												<strong>Username</strong>
+											</label>
+											<input
+												type="text"
+												className="form-control"
+												value={username}
+												placeholder="username"
+												onChange={(e) =>
+													setUsername(e.target.value)
+												}
+											/>
 										</div>
 										<div className="form-group mb-3">
 											<label className="mb-1"><strong>Password</strong></label>
@@ -113,8 +116,8 @@ function Login (props) {
 					</div>
 				</div>
 			</div>
-		</div>	
-		
+		</div>
+
   );
 };
 

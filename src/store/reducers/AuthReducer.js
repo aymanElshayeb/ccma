@@ -9,15 +9,18 @@ import {
 
 const initialState = {
     auth: {
-        email: '',
-        idToken: '',
-        localId: '',
-        expiresIn: '',
-        refreshToken: '',
+        id:"",
+        userName:"",
+        email:"",
+        fullName:"",
+        role:"",
+        expireDate:"",
+        token:""
+
     },
     errorMessage: '',
     successMessage: '',
-    showLoading: false,
+    showLoading: false
 };
 
 export function AuthReducer(state = initialState, action) {
@@ -46,11 +49,13 @@ export function AuthReducer(state = initialState, action) {
             errorMessage: '',
             successMessage: '',
             auth: {
-                email: '',
-                idToken: '',
-                localId: '',
-                expiresIn: '',
-                refreshToken: '',
+                id:"",
+                userName:"",
+                email:"",
+                fullName:"",
+                role:"",
+                expireDate:"",
+                token:""
             },
         };
     }
