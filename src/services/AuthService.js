@@ -5,6 +5,7 @@ import {
     logout,
 } from '../store/actions/AuthActions';
 import {MANAGER} from "./Request/RequestService";
+
 import {ccmaInstance} from "./CcmaInstance";
 
 export function signUp(email, password) {
@@ -58,7 +59,10 @@ export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
         new Date().getTime() + (30*60*1000) ,
     );
-    saveRole("member")
+
+    saveRole(MANAGER)
+
+
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
