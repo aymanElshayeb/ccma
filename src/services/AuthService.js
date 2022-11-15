@@ -58,6 +58,7 @@ export function saveTokenInLocalStorage(tokenDetails) {
     tokenDetails.expireDate = new Date(
         new Date().getTime() + (30*60*1000) ,
     );
+    saveRole("member")
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
 
