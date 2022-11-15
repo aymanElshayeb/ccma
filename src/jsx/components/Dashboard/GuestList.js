@@ -32,7 +32,14 @@ import card8 from "../../../images/task/img8.jpg";
 import RequestForm from "../Requests/RequestForm";
 import ApprovalForm from "../Requests/ApprovalForm";
 import {RequestsListGrid} from "../Requests/RequestsListGrid";
-import {DRAFT, MEMBER, REQUEST_EDITABLE_DRAFT} from "../../../services/Request/RequestService";
+import {
+	COMPLETED,
+	DRAFT, MANAGER,
+	MEMBER, PENDING,
+	REQUEST_EDITABLE_DRAFT, REQUEST_EDITABLE_PENDING,
+	REQUEST_READABLE
+} from "../../../services/Request/RequestService";
+import {getRole} from "../../../services/AuthService";
 
 const CardListBlog = [
 	{
@@ -182,11 +189,15 @@ const GuestList = () =>{
 		const label =
       start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
 
+	function draftMode() {
+		setFormMode(REQUEST_EDITABLE_DRAFT);
+		{onShowAddRequest(true)}
+	}
 	return(
 		<>
 			<div className="mb-sm-5 mb-3 d-flex flex-wrap align-items-center text-head">
 				<div className=" mb-2 me-auto">
-				<Link to={"#"} className="btn btn-primary font-w600" onClick={()=> {onShowAddRequest(true)}}>+ New Request</Link>
+				<Link to={"#"} className="btn btn-primary font-w600" onClick={()=> {draftMode()}}>+ New Request</Link>
 				</div>
 				{/* <!-- Modal --> */}
 				<RequestForm  show={showAddRequest} onShow={onShowAddRequest} formMode={formMode} setFormMode={setFormMode} request={request} setRequest={setRequest}/>
