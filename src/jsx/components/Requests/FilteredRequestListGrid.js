@@ -195,55 +195,6 @@ function getMode(requestStatus) {
 
 						</tbody>
 					</table>
-					<div className="d-sm-flex text-center justify-content-between align-items-center mt-3 mb-3">
-						<div className="dataTables_info">
-							Showing {activePag.current * sort + 1} to{" "}
-							{data.length > (activePag.current + 1) * sort
-								? (activePag.current + 1) * sort
-								: data.length}{" "}
-							of {data.length} entries
-						</div>
-						<div
-							className="dataTables_paginate paging_simple_numbers mb-0"
-							id="example2_paginate"
-						>
-							<Link
-								className="paginate_button previous disabled"
-								to="/guest-list"
-								onClick={() =>
-								   activePag.current > 0 &&
-								   onClick(activePag.current - 1)
-								}
-							 >
-								<i className="fa fa-angle-double-left"></i>
-							</Link>
-							<span>
-								{paggination.map((number, i) => (
-								   <Link
-									  key={i}
-									  to="/guest-list"
-									  className={`paginate_button  ${
-										 activePag.current === i ? "current" : ""
-									  } `}
-									  onClick={() => onClick(i)}
-								   >
-									  {number}
-								   </Link>
-								))}
-							</span>
-
-							<Link
-								className="paginate_button next"
-								to="/guest-list"
-								onClick={() =>
-								   activePag.current + 1 < paggination.length &&
-								   onClick(activePag.current + 1)
-								}
-							>
-								<i className="fa fa-angle-double-right" aria-hidden="true"></i>
-							</Link>
-						</div>
-					</div>
 				</div>
 			</div>
 		</>
