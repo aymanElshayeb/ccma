@@ -14,8 +14,8 @@ export function signUp(username, password,email,fullName,role=MEMBER) {
         "email":email,
         "password":password,
         "role":role,
-        "full_name":fullName,
-        "user_name":username
+        "fullName":fullName,
+        "userName":username
 
     };
     return ccmaInstance.post(
@@ -63,8 +63,6 @@ export function saveTokenInLocalStorage(tokenDetails) {
         new Date().getTime() + (30*60*1000) ,
     );
 
-    saveRole(tokenDetails.role)
-
 
     localStorage.setItem('userDetails', JSON.stringify(tokenDetails));
 }
@@ -105,6 +103,5 @@ export function saveRole(role) {
 
 
 export function getRole() {
-   const role= localStorage.getItem('userRole');
-   return JSON.parse(role);
+    return JSON.parse(localStorage.getItem('userDetails')).role;
 }

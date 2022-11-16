@@ -71,9 +71,11 @@ const FilteredRequestListGrid = ({requestLists, request, setRequest, setFormMode
     };
 
 function getMode(requestStatus) {
-		const role=getRole()
+
+		const role =getRole();
 
 		if (role ==MEMBER){
+
 			if(requestStatus==DRAFT || requestStatus=="")
 			     setFormMode(REQUEST_EDITABLE_DRAFT);
 			else if(requestStatus==COMPLETED)
@@ -83,17 +85,18 @@ function getMode(requestStatus) {
 
 
 		}else if(role ==MANAGER){
-			if(requestStatus==DRAFT)
+			if(requestStatus==DRAFT){
 				setFormMode(REQUEST_EDITABLE_DRAFT);
-			else if(requestStatus==PENDING)
+			}
+			else if(requestStatus==PENDING){
 				setFormMode(REQUEST_EDITABLE_PENDING);
+			}
+			else if(requestStatus==COMPLETED){
+				setFormMode(REQUEST_READABLE);
+
+			}
 
 
-		}else if (role==MANAGER){
-			if(requestStatus==DRAFT)
-				setFormMode(REQUEST_EDITABLE_DRAFT);
-			else if(requestStatus==PENDING)
-				setFormMode(REQUEST_EDITABLE_PENDING);
 
 		}
 
@@ -133,13 +136,8 @@ function getMode(requestStatus) {
 													const tempRequest= {id: localRequest.id,requesterId: localRequest.requester.id, projectId: localRequest.project.id, systemAccessId: localRequest.systemAccess.id, systemId: localRequest.systemAccess.systemName };
 													setRequest(tempRequest);
 													console.log("request after modification", request);
-
-
 													getMode(localRequest.status);
 													onShow(true);
-
-
-
 												}}>
 												<h5 className="text-nowrap">{localRequest.id}</h5>
 												</Link>

@@ -6,7 +6,7 @@ export const COMPLETED ="COMPLETED";
 export const READY ="READY";
 
 export const MEMBER = "MEMBER"
-export const MANAGER ="MANGER"
+export const MANAGER ="MANAGER"
 
 export const REQUEST_READABLE_DRAFT = {
     editable:false,

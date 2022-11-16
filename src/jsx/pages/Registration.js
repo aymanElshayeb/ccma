@@ -13,6 +13,7 @@ function Register(props) {
     const [username, setUsername] = useState('nabil');
     const [email, setEmail] = useState('nabilmokhtar15@gmail.com');
     const [password, setPassword] = useState('poiuytrewq');
+    const [confirmPassword, setConfirmPassword] = useState('poiuytrewq');
     const [fullName, setFullName] = useState('nabil mokhtar');
     // const [role, setRole] = useState('');
 
@@ -36,13 +37,20 @@ function Register(props) {
             error = true;
 			swal('Oops', errorObj.password, "error");
         }
+
+        if (password !=confirmPassword) {
+            errorObj.password = 'Password Not Match';
+            error = true;
+            swal('Oops', errorObj.password, "error");
+        }
+
         if (email === '') {
             errorObj.email = 'Email is Required';
             error = true;
             swal('Oops', errorObj.email, "error");
         }
         if (fullName === '') {
-            errorObj.email = 'FullName is Required';
+            errorObj.fullName = 'FullName is Required';
             error = true;
             swal('Oops', errorObj.fullName, "error");
         }
@@ -51,6 +59,7 @@ function Register(props) {
         //     error = true;
         //     swal('Oops', errorObj.role, "error");
         // }
+
         setErrors(errorObj);
         if (error) return;
         dispatch(loadingToggleAction(true));
@@ -129,7 +138,7 @@ function Register(props) {
                                 <strong>Full Name</strong>
                             </label>
                             <input
-
+                                type="text"
                                 onChange={(e) => setFullName(e.target.value)}
                                 className="form-control"
                                 placeholder="full name"
@@ -160,7 +169,22 @@ function Register(props) {
                         />
                       </div>
 					  {errors.password && <div>{errors.password}</div>}
+                        <div className="form-group mb-3">
+                            <label className="mb-1 ">
+                                <strong>Confirm Password</strong>
+                            </label>
+                            <input
+                                defaultValue={password}
+                                onChange={(e) =>
+                                    setConfirmPassword(e.target.value)
+                                }
+                                className="form-control"
+                                placeholder="Confirm password"
 
+                            />
+
+                        </div>
+                        {errors.password && <div>{errors.password}</div>}
                       <div className="text-center mt-4">
                         <button
                           type="submit"

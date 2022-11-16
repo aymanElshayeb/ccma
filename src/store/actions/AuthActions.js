@@ -15,21 +15,16 @@ export const LOGIN_FAILED_ACTION = '[login action] failed login';
 export const LOADING_TOGGLE_ACTION = '[Loading action] toggle loading';
 export const LOGOUT_ACTION = '[Logout action] logout action';
 
-export function signupAction(username, password,email,role,fullName, history) {
+export function signupAction(username, password,email,fullName, history) {
     return (dispatch) => {
+        localStorage.removeItem('userDetails');
         signUp(username, password,email,fullName)
         .then((response) => {
-            saveTokenInLocalStorage(response.data);
-            runLogoutTimer(
-                dispatch,
-                30*60 * 1000,
-                history,
-            );
-            dispatch(confirmedSignupAction(response.data));
-            history.push('/dashboard');
+            saveLoginUser(response, username, password, dispatch, history,confirmedSignupAction);
         })
         .catch((error) => {
-            const errorMessage = formatError(error.response.data);
+            console.log(error);
+            const errorMessage = formatError(error.message);
             dispatch(signupFailedAction(errorMessage));
         });
     };
@@ -43,26 +38,30 @@ export function logout(history) {
     };
 }
 
+function saveLoginUser(response, username, password, dispatch, history,nextAction) {
+    let userDetails = response.data;
+    let tokenJson = {
+        "username": username,
+        "password": password
+    }
+    userDetails = {
+        ...userDetails, token: utf8_to_b64(JSON.stringify(tokenJson))
+    }
+    saveTokenInLocalStorage(userDetails);
+    runLogoutTimer(
+        dispatch,
+        30 * 60 * 1000,
+        history,
+    );
+    dispatch(nextAction(userDetails));
+    history.push('/dashboard');
+}
+
 export function loginAction(username, password, history) {
     return (dispatch) => {
         login(username, password)
             .then((response) => {
-                let userDetails = response.data;
-                let tokenJson = {
-                    "username": username,
-                    "password": password
-                }
-                userDetails ={
-                    ...userDetails, token:utf8_to_b64(JSON.stringify(tokenJson))
-                }
-                saveTokenInLocalStorage(userDetails);
-                runLogoutTimer(
-                    dispatch,
-                   30*60* 1000,
-                    history,
-                );
-                dispatch(loginConfirmedAction(userDetails));
-				history.push('/dashboard');
+                saveLoginUser(response, username, password, dispatch, history,loginConfirmedAction);
             })
             .catch((error) => {
 				console.log(error);
