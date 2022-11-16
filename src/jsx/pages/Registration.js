@@ -54,11 +54,6 @@ function Register(props) {
             error = true;
             swal('Oops', errorObj.fullName, "error");
         }
-        // if (role === '') {
-        //     errorObj.role = 'Role is Required';
-        //     error = true;
-        //     swal('Oops', errorObj.role, "error");
-        // }
 
         setErrors(errorObj);
         if (error) return;
@@ -119,20 +114,6 @@ function Register(props) {
                       </div>
 					  {errors.email && <div>{errors.email}</div>}
 
-                        {/*<div className="form-group mb-3">*/}
-                        {/*    <label className="mb-1 ">*/}
-                        {/*        <strong>Role</strong>*/}
-                        {/*    </label>*/}
-                        {/*    <input*/}
-
-                        {/*        onChange={(e) => setRole(e.target.value)}*/}
-                        {/*        className="form-control"*/}
-                        {/*        placeholder="Role"*/}
-                        {/*    />*/}
-                        {/*</div>*/}
-                        {/*{errors.role && <div>{errors.role}</div>}*/}
-
-
                         <div className="form-group mb-3">
                             <label className="mb-1 ">
                                 <strong>Full Name</strong>
@@ -147,13 +128,6 @@ function Register(props) {
                         </div>
                         {errors.fullName && <div>{errors.fullName}</div>}
 
-                        {/*<label id="role" className="mb-1 "><strong>Role</strong></label>*/}
-                        {/*<select name="role" id="role" className="form-control">*/}
-                        {/*    <option value="Member">Member</option>*/}
-                        {/*    <option value="Project">Project</option>*/}
-                        {/*</select>*/}
-
-
                       <div className="form-group mb-3">
                         <label className="mb-1 ">
                           <strong>Password</strong>
@@ -165,7 +139,7 @@ function Register(props) {
 							}
 							className="form-control"
 							placeholder="password"
-
+                            type="password"
                         />
                       </div>
 					  {errors.password && <div>{errors.password}</div>}
@@ -180,6 +154,7 @@ function Register(props) {
                                 }
                                 className="form-control"
                                 placeholder="Confirm password"
+                                type="password"
 
                             />
 
