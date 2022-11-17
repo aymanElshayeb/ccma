@@ -36,7 +36,7 @@ const DropdownBlog = (props) =>{
 	)
 }
 
-const GuestList = () =>{
+const AccessRequests = () =>{
 
 
 	const [showAddRequest, onShowAddRequest] = useState(false);
@@ -144,4 +144,4 @@ const GuestList = () =>{
 	)
 }
 export {DropdownBlog};
-export default GuestList;
+export default AccessRequests;

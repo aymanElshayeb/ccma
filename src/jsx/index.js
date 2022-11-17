@@ -5,15 +5,13 @@ import {  Switch, Route } from "react-router-dom";
 
 /// Css
 import "./index.css";
-import "./chart.css";
-import "./step.css";
 
 /// Layout
 import Nav from "./layouts/nav";
 import Footer from "./layouts/Footer";
 
 
-import GuestList from "./components/Dashboard/GuestList";
+import AccessRequests from "./components/Dashboard/AccessRequests";
 
 
 /// Pages
@@ -32,8 +30,8 @@ const Markup = () => {
   const { menuToggle } = useContext(ThemeContext);
   const routes = [
     /// Dashboard
-    { url: "", component: GuestList  },
-    { url: "requests-list", component: GuestList },
+    { url: "", component: AccessRequests  },
+    { url: "requests-list", component: AccessRequests },
 
 
     /// pages
