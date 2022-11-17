@@ -201,11 +201,6 @@ const GuestList = () =>{
 				</div>
 				{/* <!-- Modal --> */}
 				<RequestForm  show={showAddRequest} onShow={onShowAddRequest} formMode={formMode} setFormMode={setFormMode} request={request} setRequest={setRequest}/>
-				<div>
-					<Link to={"#"} className="btn btn-secondary btn-sm me-3"> <i className="fas fa-envelope"></i></Link>
-					<Link to={"#"} className="btn btn-secondary btn-sm me-3"><i className="fas fa-phone-alt"></i></Link>
-					<Link to={"#"} className="btn btn-primary btn-sm"><i className="fas fa-info"></i></Link>
-				</div>
 			</div>
 			<RequestsListGrid onShow={onShowAddRequest} request={request} setRequest={setRequest} setFormMode={setFormMode} refresh={showAddRequest}/>
 		</>
