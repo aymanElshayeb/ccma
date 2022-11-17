@@ -13,6 +13,7 @@ import {
     DRAFT, MEMBER, REQUEST_EDITABLE_DRAFT, REQUEST_READABLE, approveRequest, returnToRequester, REQUEST_EDITABLE_PENDING
 } from "../../../services/Request/RequestService";
 import requestTemplate from "../../../template/request.json";
+import {getRole} from "../../../services/AuthService";
 
 const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,doRefresh})=>{
 
@@ -106,6 +107,9 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
         doRefresh(current => !current);
     }
 
+    function requesterOption() {
+        return !(formMode.editable && getRole() == MANAGER);
+    }
 
     return (
         <Modal className="modal fade"  show={show} onHide={onShow} >
@@ -137,7 +141,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Requester</label>
                                         <div className="contact-occupation">
-                                            <select className="form-control" disabled={!formMode.editable} value={request.requesterId} onChange={(event)=>setRequest((prev)=>({...prev, requesterId:event.target.value}))}>
+                                            <select className="form-control" disabled={requesterOption()} value={request.requesterId} onChange={(event)=>setRequest((prev)=>({...prev, requesterId:event.target.value}))}>
                                                 {requesterList.map((requester) => <option key={requester.id} value={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>
