@@ -13,8 +13,9 @@ import {
     DRAFT, MEMBER, REQUEST_EDITABLE_DRAFT, REQUEST_READABLE, approveRequest, returnToRequester, REQUEST_EDITABLE_PENDING
 } from "../../../services/Request/RequestService";
 import requestTemplate from "../../../template/request.json";
+import {getRole} from "../../../services/AuthService";
 
-const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})=>{
+const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,doRefresh})=>{
 
     const [file, setFile] = React.useState(null);
     const [requesterList, setRequesterList]=useState([{}]);
@@ -66,6 +67,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
         updateRequestTemplate();
         submitRequest(requestTemplate);
         swal('Good job!', 'Successfully submitted', "success");
@@ -74,6 +76,8 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const approveHandler= (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
+
         updateRequestTemplate();
         approveRequest(requestTemplate);
         swal('Good job!', 'Successfully approve', "success");
@@ -81,6 +85,8 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const returnToRequesterHandler= (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
+
         updateRequestTemplate();
         returnToRequester(requestTemplate);
         swal('Good job!', 'Successfully return to requester', "success");
@@ -88,11 +94,22 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const saveAsDraftHandler = (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
+
         updateRequestTemplate();
         console.log("Template request before sending", requestTemplate);
         saveAsDraftRequest(requestTemplate);
         swal('Good job!', 'Successfully save as draft', "success");
     };
+
+    function closeForm() {
+        onShow(false);
+        doRefresh(current => !current);
+    }
+
+    function requesterOption() {
+        return !(formMode.editable && getRole() == MANAGER);
+    }
 
     return (
         <Modal className="modal fade"  show={show} onHide={onShow} >
@@ -102,7 +119,8 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
                     <form >
                         <div className="modal-header">
                             <h4 className="modal-title fs-20">Access Request</h4>
-                            <button type="button" className="btn-close" onClick={()=> onShow(false)} data-dismiss="modal"></button>
+                            <button type="button" className="btn-close" onClick={()=> closeForm()
+                            } data-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
                             <i className="flaticon-cancel-12 close"></i>
@@ -123,7 +141,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
                                     <div className="form-group mb-3">
                                         <label className="text-black font-w500">Requester</label>
                                         <div className="contact-occupation">
-                                            <select className="form-control" disabled={!formMode.editable} value={request.requesterId} onChange={(event)=>setRequest((prev)=>({...prev, requesterId:event.target.value}))}>
+                                            <select className="form-control" disabled={requesterOption()} value={request.requesterId} onChange={(event)=>setRequest((prev)=>({...prev, requesterId:event.target.value}))}>
                                                 {requesterList.map((requester) => <option key={requester.id} value={requester.id}>{requester.fullName}</option>)}
                                             </select>
                                         </div>

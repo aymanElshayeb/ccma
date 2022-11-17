@@ -36,7 +36,7 @@ export function login(username, password) {
 }
 
 export function formatError(errorResponse) {
-    switch (errorResponse.error.message) {
+    switch (errorResponse) {
         case 'EMAIL_EXISTS':
             //return 'Email already exists';
             swal("Oops", "Email already exists", "error");
@@ -53,7 +53,7 @@ export function formatError(errorResponse) {
             return 'User Disabled';
 
         default:
-            return '';
+            return 'Invalid Credentials';
     }
 }
 

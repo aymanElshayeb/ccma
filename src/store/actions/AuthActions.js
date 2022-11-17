@@ -65,7 +65,7 @@ export function loginAction(username, password, history) {
             })
             .catch((error) => {
 				console.log(error);
-                const errorMessage = formatError(error.message);
+                const errorMessage = formatError(error);
                 dispatch(loginFailedAction(errorMessage));
             });
     };
