@@ -4,7 +4,6 @@ import App from "./App";
 import { BrowserRouter } from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {store} from './store/store';
-import reportWebVitals from "./reportWebVitals";
 import SimpleReactLightbox from "simple-react-lightbox";
 import  ThemeContext  from "./context/ThemeContext";
 
@@ -13,7 +12,7 @@ ReactDOM.render(
 		<Provider store = {store}>
 
             <SimpleReactLightbox>
-                <BrowserRouter basename='/react/demo'>
+                <BrowserRouter basename='/ccma'>
                     <ThemeContext>
                         <App />
                     </ThemeContext>  
@@ -23,4 +22,3 @@ ReactDOM.render(
 	</React.StrictMode>,
   document.getElementById("root")
 );
-reportWebVitals();

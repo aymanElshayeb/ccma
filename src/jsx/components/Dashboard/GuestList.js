@@ -1,36 +1,9 @@
 import React,{ useState, useRef, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import { Dropdown, Tab, Nav, Modal } from "react-bootstrap";
-
-///Import
-import PendingBlog from './Guest/PendingBlog';
-import BookedBlog from './Guest/BookedBlog';
-import CanceledBlog from './Guest/CanceledBlog';
-import RefundBlog from './Guest/RefundBlog';
-
-//Images
-import pic1 from './../../../images/avatar/1.jpg';
-import pic2 from './../../../images/avatar/2.jpg';
-import pic3 from './../../../images/avatar/3.jpg';
-import pic4 from './../../../images/avatar/4.jpg';
-import pic5 from './../../../images/avatar/5.jpg';
-import pic6 from './../../../images/avatar/6.jpg';
-import user from "../../../images/task/user.jpg";
-import {nanoid} from "nanoid";
-import swal from "sweetalert";
-import card1 from "../../../images/task/img1.jpg";
-import card2 from "../../../images/task/img2.jpg";
-import card3 from "../../../images/task/img3.jpg";
-import card4 from "../../../images/task/img4.jpg";
-import card5 from "../../../images/task/img5.jpg";
-import card6 from "../../../images/task/img6.jpg";
-import card7 from "../../../images/task/img7.jpg";
-import card8 from "../../../images/task/img8.jpg";
 import RequestForm from "../Requests/RequestForm";
-import ApprovalForm from "../Requests/ApprovalForm";
 import {RequestsListGrid} from "../Requests/RequestsListGrid";
 import {
 	COMPLETED,
@@ -39,42 +12,6 @@ import {
 	REQUEST_EDITABLE_DRAFT, REQUEST_EDITABLE_PENDING,
 	REQUEST_READABLE
 } from "../../../services/Request/RequestService";
-import {getRole} from "../../../services/AuthService";
-
-const CardListBlog = [
-	{
-		id:1, image: card1, Cust_Id:"01234",  Date_Join:"19/02/2022",
-		Cust_Name: "Munaroh Steffani", Location:"India"
-	},
-	{
-		id:2, image: card2, Cust_Id:"01235", Date_Join:"20/03/2022",
-		Cust_Name: "Geovanny Anderson", 	Location:"London "
-	},
-	{
-		id:3, image: card3, Cust_Id:"01236", Date_Join:"21/04/2022",
-		Cust_Name: "Louis Ali", Location:"Afghanistan"
-	},
-	{
-		id:4, image: card4, Cust_Id:"01237", Date_Join:"22/05/2022",
-		Cust_Name: "Marquezz", Location:"Belgium"
-	},
-	{
-		id:5, image: card5, Cust_Id:"01238", Date_Join:"23/06/2022",
-		Cust_Name: "Richard ", Location:"Colombia"
-	},
-	{
-		id:6, image: card6, Cust_Id:"01239", Date_Join:"24/07/2022",
-		Cust_Name: "Andrew Stevano",  	Location:"Czechia"
-	},
-	{
-		id:7, image: card7, Cust_Id:"01240", Date_Join:"25/08/2022",
-		Cust_Name: "Cathenna ",  Location:"El Salvador"
-	},
-	{
-		id:8, image: card8, Cust_Id:"01241", Date_Join:"26/09/2022",
-		Cust_Name: "Hrisovalantis ",  	Location:"Guatemala"
-	}
-];
 
 
 const DropdownBlog = (props) =>{

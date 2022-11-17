@@ -6,7 +6,6 @@ import { loadingToggleAction,loginAction,
 
 // image
 import logo from "../../images/Logo.svg";
-import loginbg from "../../images/pic1.png";
 
 function Login (props) {
   const [username, setUsername] = useState('elshayeb');
