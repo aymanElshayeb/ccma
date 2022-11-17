@@ -6,7 +6,7 @@ import logo from "../../images/Logo.svg";
 const LockScreen = ({ history }) => {
   const submitHandler = (e) => {
     e.preventDefault();
-    history.push("/dashboard");
+    history.push("/requests-list");
   };
   return (
     <div className="authincation h-100 p-meddle">
@@ -18,7 +18,7 @@ const LockScreen = ({ history }) => {
                 <div className="col-xl-12">
                   <div className="auth-form">
                     <div className="text-center mb-3">
-                      <Link to="/dashboard">
+                      <Link to="/requests-list">
                         <img src={logo} alt="" />
                       </Link>
                     </div>

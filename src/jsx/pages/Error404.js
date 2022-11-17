@@ -18,7 +18,7 @@ const Error404 = () => {
                         moved.
                      </p>
                      <div>
-                        <Link className="btn btn-primary" to="/dashboard">
+                        <Link className="btn btn-primary" to="/requests-list">
                            Back to Home
                         </Link>
                      </div>

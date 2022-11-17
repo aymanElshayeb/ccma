@@ -54,7 +54,7 @@ function saveLoginUser(response, username, password, dispatch, history,nextActio
         history,
     );
     dispatch(nextAction(userDetails));
-    history.push('/dashboard');
+    history.push('/requests-list');
 }
 
 export function loginAction(username, password, history) {
