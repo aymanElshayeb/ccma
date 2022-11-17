@@ -180,51 +180,13 @@ const SideBar = () => {
     >
       <PerfectScrollbar className="dlabnav-scroll">
         <MM className="metismenu" id="menu">
-		  <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
-            <Link className="has-arrow" to="#" >
+		  <li className="mm-active" >
+            <Link className="has-arrow" to="/requests-list" >
               <i className="fas fa-home"></i>
               <span className="nav-text">Access requests</span>
             </Link>
-            <ul >
-              <li><Link className={`${path === "requests-list" ? "mm-active" : ""}`} to="/requests-list">requests</Link></li>
-              <li><Link className={`${path === "task" ? "mm-active" : ""}`} to="/task">Task</Link></li>
-            </ul>
           </li>
-			
-          <li className={`${app.includes(path) ? "mm-active" : ""}`}>
-            <Link className="has-arrow ai-icon" to="#" >
-              <i className="fas fa-info-circle"></i>
-              <span className="nav-text">Apps</span>
-            </Link>
-            <ul >
-              <li className={`${email.includes(path) ? "mm-active" : ""}`}><Link className="has-arrow" to="#" >Email</Link>
-                <ul  className={`${email.includes(path) ? "mm-show" : ""}`}>
-                  <li><Link className={`${ path === "email-compose" ? "mm-active" : ""}`} to="/email-compose">Compose</Link></li>
-                  <li><Link className={`${path === "email-inbox" ? "mm-active" : ""}`} to="/email-inbox">Inbox</Link></li>
-                  <li><Link className={`${path === "email-read" ? "mm-active" : ""}`} to="/email-read">Read</Link></li>
-                </ul>
-              </li>
-              <li><Link className={`${path === "app-calender" ? "mm-active" : ""}`}to="/app-calender">Releases</Link></li>
-              <li className={`${shop.includes(path) ? "mm-active" : ""}`}><Link className="has-arrow" to="#" >Requesters</Link>
-                <ul  className={`${shop.includes(path) ? "mm-show" : ""}`}>
-                  <li><Link className={`${ path === "ecom-customers" ? "mm-active" : "" }`} to="/ecom-customers">Requesters</Link></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li className={`${charts.includes(path) ? "mm-active" : ""}`}>
-            <Link className="has-arrow ai-icon" to="#" >
-              <i className="fas fa-chart-line"></i>
-              <span className="nav-text">Reports</span>
-            </Link>
-            <ul >
-              <li><Link className={`${path === "chart-rechart" ? "mm-active" : ""}`} to="/chart-rechart">RechartJs</Link></li>
-              <li><Link className={`${path === "chart-chartjs" ? "mm-active" : ""}`} to="/chart-chartjs">Chartjs</Link></li>
-              <li><Link className={`${path === "chart-chartist" ? "mm-active" : ""}`} to="/chart-chartist">Chartist</Link></li>
-              <li><Link className={`${path === "chart-sparkline" ? "mm-active" : ""}`} to="/chart-sparkline">Sparkline</Link></li>
-              <li><Link className={`${path === "chart-apexchart" ? "mm-active" : ""}`} to="/chart-apexchart" >Apexchart</Link></li>
-            </ul>
-          </li>
+
         </MM>
 		<div className="dropdown header-profile2 ">
 			<div className="header-info2 text-center">
@@ -232,11 +194,11 @@ const SideBar = () => {
 				<div className="sidebar-info">
 					<div>
 						<h5 className="font-w500 mb-0">System Admin</h5>
-						<span className="fs-12">systemadmin@infineon.com</span>
+						<span className="fs-12">raghavan.chakravarthy@infineon.com</span>
 					</div>	
 				</div>
 				<div>
-					<Link to={"#"} className="btn btn-md text-secondary">Contact Us</Link>
+                  <a href = "mailto:raghavan.chakravarthy@infineon.com" className="btn btn-md text-secondary">Contact Us</a>
 				</div>
 			</div>
 		</div>
