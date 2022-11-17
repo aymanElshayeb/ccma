@@ -14,7 +14,7 @@ import {
 } from "../../../services/Request/RequestService";
 import requestTemplate from "../../../template/request.json";
 
-const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})=>{
+const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,doRefresh})=>{
 
     const [file, setFile] = React.useState(null);
     const [requesterList, setRequesterList]=useState([{}]);
@@ -66,6 +66,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
         updateRequestTemplate();
         submitRequest(requestTemplate);
         swal('Good job!', 'Successfully submitted', "success");
@@ -74,6 +75,8 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const approveHandler= (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
+
         updateRequestTemplate();
         approveRequest(requestTemplate);
         swal('Good job!', 'Successfully approve', "success");
@@ -81,6 +84,8 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const returnToRequesterHandler= (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
+
         updateRequestTemplate();
         returnToRequester(requestTemplate);
         swal('Good job!', 'Successfully return to requester', "success");
@@ -88,11 +93,19 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const saveAsDraftHandler = (event)=> {
         event.preventDefault();
         onShow(false);
+        doRefresh(current => !current);
+
         updateRequestTemplate();
         console.log("Template request before sending", requestTemplate);
         saveAsDraftRequest(requestTemplate);
         swal('Good job!', 'Successfully save as draft', "success");
     };
+
+    function closeForm() {
+        onShow(false);
+        doRefresh(current => !current);
+    }
+
 
     return (
         <Modal className="modal fade"  show={show} onHide={onShow} >
@@ -102,7 +115,8 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
                     <form >
                         <div className="modal-header">
                             <h4 className="modal-title fs-20">Access Request</h4>
-                            <button type="button" className="btn-close" onClick={()=> onShow(false)} data-dismiss="modal"></button>
+                            <button type="button" className="btn-close" onClick={()=> closeForm()
+                            } data-dismiss="modal"></button>
                         </div>
                         <div className="modal-body">
                             <i className="flaticon-cancel-12 close"></i>
