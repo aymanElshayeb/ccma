@@ -108,3 +108,7 @@ export function getRole() {
 export function getId(){
     return JSON.parse(localStorage.getItem('userDetails')).id;
 }
+
+export function getName(){
+    return JSON.parse(localStorage.getItem('userDetails')).userName;
+}
