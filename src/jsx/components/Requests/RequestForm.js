@@ -22,7 +22,7 @@ import {
 import requestTemplate from "../../../template/request.json";
 import {getRole} from "../../../services/AuthService";
 
-const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,doRefresh})=>{
+const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})=>{
 
     const [file, setFile] = React.useState(null);
     const [requesterList, setRequesterList]=useState([{}]);
@@ -74,7 +74,6 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
         updateRequestTemplate();
         submitRequest(requestTemplate);
         swal('Good job!', 'Successfully submitted', "success");
@@ -83,8 +82,6 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const approveHandler= (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
-
         updateRequestTemplate();
         approveRequest(requestTemplate);
         swal('Good job!', 'Successfully approve', "success");
@@ -92,8 +89,6 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const returnToRequesterHandler= (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
-
         updateRequestTemplate();
         returnToRequester(requestTemplate);
         swal('Good job!', 'Successfully return to requester', "success");
@@ -101,8 +96,6 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const saveAsDraftHandler = (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
-
         updateRequestTemplate();
         console.log("Template request before sending", requestTemplate);
         saveAsDraftRequest(requestTemplate);
@@ -111,7 +104,6 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
 
     function closeForm() {
         onShow(false);
-        doRefresh(current => !current);
     }
 
     function requesterOption() {
