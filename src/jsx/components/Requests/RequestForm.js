@@ -74,7 +74,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const submitHandler = (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
+        // doRefresh(current => !current);
         updateRequestTemplate();
         submitRequest(requestTemplate);
         swal('Good job!', 'Successfully submitted', "success");
@@ -83,7 +83,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const approveHandler= (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
+        // doRefresh(current => !current);
 
         updateRequestTemplate();
         approveRequest(requestTemplate);
@@ -92,7 +92,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const returnToRequesterHandler= (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
+        // doRefresh(current => !current);
 
         updateRequestTemplate();
         returnToRequester(requestTemplate);
@@ -101,7 +101,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     const saveAsDraftHandler = (event)=> {
         event.preventDefault();
         onShow(false);
-        doRefresh(current => !current);
+        // doRefresh(current => !current);
 
         updateRequestTemplate();
         console.log("Template request before sending", requestTemplate);
@@ -111,7 +111,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
 
     function closeForm() {
         onShow(false);
-        doRefresh(current => !current);
+        // doRefresh(current => !current);
     }
 
     function requesterOption() {
