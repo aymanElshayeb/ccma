@@ -10,7 +10,14 @@ import {
     getSystemAccessList,
     submitRequest,
     saveAsDraftRequest,
-    DRAFT, MEMBER, REQUEST_EDITABLE_DRAFT, REQUEST_READABLE, approveRequest, returnToRequester, REQUEST_EDITABLE_PENDING
+    DRAFT,
+    MEMBER,
+    REQUEST_EDITABLE_DRAFT,
+    REQUEST_READABLE,
+    approveRequest,
+    returnToRequester,
+    REQUEST_EDITABLE_PENDING,
+    MANAGER
 } from "../../../services/Request/RequestService";
 import requestTemplate from "../../../template/request.json";
 import {getRole} from "../../../services/AuthService";
@@ -108,7 +115,7 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode,d
     }
 
     function requesterOption() {
-        return !(formMode.editable && getRole() == MANAGER);
+        return !(formMode.editable && getRole() === MANAGER);
     }
 
     return (
