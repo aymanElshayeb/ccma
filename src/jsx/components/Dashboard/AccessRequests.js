@@ -12,6 +12,7 @@ import {
 	REQUEST_EDITABLE_DRAFT, REQUEST_EDITABLE_PENDING,
 	REQUEST_READABLE
 } from "../../../services/Request/RequestService";
+import {getId} from "../../../services/AuthService";
 
 
 const DropdownBlog = (props) =>{
@@ -41,7 +42,8 @@ const AccessRequests = () =>{
 
 	const [showAddRequest, onShowAddRequest] = useState(false);
 	const [request, setRequest] =useState({
-		requesterId: 1,
+
+		requesterId: getId(),
 		projectId:1,
 		systemId:"JIRA",
 		systemAccessId:1,
