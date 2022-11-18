@@ -36,188 +36,34 @@ export const REQUEST_READABLE = {
     isReturnToRequester:false,
     isApproveActive:false
 };
-const requestList = [
-    {
-        "id": 1,
-        "requester": {
-            "id": 2,
-            "userName": "lnzautomationuser",
-            "email": "no.mail@nomail.nomail",
-            "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
-        },
-        "systemAccess": {
-            "id": 3,
-            "systemName": "JIRA",
-            "accessPermission": "ADMIN"
-        },
-        "status": "COMPLETED",
-        "project": {
-            "id": 1,
-            "name": "CTRX Radar Family [CTRXFAMILY]"
-        },
-        "creationDate": "2022-10-19T22:00:00.000+00:00",
-        "lastModifiedDate": "2022-10-20T22:00:00.000+00:00",
-        "lastModifier": {
-            "id": 2,
-            "userName": "lnzautomationuser",
-            "email": "no.mail@nomail.nomail",
-            "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
-        }
-    },
-    {
-        "id": 2,
-        "requester": {
-            "id": 2,
-            "userName": "lnzautomationuser",
-            "email": "no.mail@nomail.nomail",
-            "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
-        },
-        "systemAccess": {
-            "id": 6,
-            "systemName": "SVN",
-            "accessPermission": "ADMIN"
-        },
-        "status": "COMPLETED",
-        "project": {
-            "id": 1,
-            "name": "CTRX Radar Family [CTRXFAMILY]"
-        },
-        "creationDate": "2022-10-19T22:00:00.000+00:00",
-        "lastModifiedDate": "2022-10-20T22:00:00.000+00:00",
-        "lastModifier": {
-            "id": 2,
-            "userName": "lnzautomationuser",
-            "email": "no.mail@nomail.nomail",
-            "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
-        }
-    }
-];
 
-const accessList=[
-    {
-        "id": 1,
-        "systemName": "JIRA",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 2,
-        "systemName": "JIRA",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 3,
-        "systemName": "JIRA",
-        "accessPermission": "ADMIN"
-    },
-    {
-        "id": 4,
-        "systemName": "SVN",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 5,
-        "systemName": "SVN",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 6,
-        "systemName": "SVN",
-        "accessPermission": "ADMIN"
-    }
-];
-const  projectList=[
-    {
-        "id": 1,
-        "name": "CTRX Radar Family [CTRXFAMILY]"
-    }
-];
-const requesterList  = [
-    {
-        "id": 1,
-        "userName": "elshayeb",
-        "email": "Elshayeb.external@infineon.com",
-        "fullName": "Elshayeb Ayman (IFAT DCL ATV SC D RAD PJM)"
-    },
-    {
-        "id": 2,
-        "userName": "lnzautomationuser",
-        "email": "no.mail@nomail.nomail",
-        "fullName": "LNZautomationuser None (IFL ATV SC D RAD PJM)"
-    }
-];
-const SystemAccessList = [
-    {
-        "id": 1,
-        "systemName": "JIRA",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 2,
-        "systemName": "JIRA",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 3,
-        "systemName": "JIRA",
-        "accessPermission": "ADMIN"
-    },
-    {
-        "id": 4,
-        "systemName": "SVN",
-        "accessPermission": "READ"
-    },
-    {
-        "id": 5,
-        "systemName": "SVN",
-        "accessPermission": "WRITE"
-    },
-    {
-        "id": 6,
-        "systemName": "SVN",
-        "accessPermission": "ADMIN"
-    }
-];
-const addRequest= (request)=>{
-    request.ID = requestList.length;
-    requestList.push(request);
-    console.log(request);
-    console.log(requestList);
-}
-
-const updateRequest= (request)=>{
-    const existingRequest = requestList.find((existingRequest)=> existingRequest.ID == request.ID);
-    [...existingRequest] = [...request];
-    console.log(request);
-    console.log(requestList);
-}
-
-export const  fetchRequestList = ()=>{
+export const  fetchRequestList = async ()=>{
     return ccmaInstance.get('request/')
 
 }
-export const fetchProjectList= ()=>{
+export const fetchProjectList= async ()=>{
     return ccmaInstance.get('project/')
 }
-export const fetchRequesterList= ()=>{
+export const fetchRequesterList= async ()=>{
     return ccmaInstance.get('requester/')
 }
-export const   fetchAllSystemAccessList = ()=>{
+export const   fetchAllSystemAccessList =async  ()=>{
     return ccmaInstance.get('systemAccess/');
 }
-export const submitRequest=(request)=>{
-    ccmaInstance.post('requestAction/submit/',request).catch((reason)=>{console.log("Error occurs", reason)})
+export const   submitRequest= async (request)=>{
+    return  ccmaInstance.post('requestAction/submit/',request).catch((reason)=>{console.log("Error occurs", reason)})
 }
-export const saveAsDraftRequest= (request)=>{
-    ccmaInstance.post('requestAction/saveAsDraft/',request)
-}
-
-
-export const approveRequest= (request)=>{
-    ccmaInstance.post('requestAction/execute/',request)
+export const saveAsDraftRequest= async (request)=>{
+    return  ccmaInstance.post('requestAction/saveAsDraft/',request)
 }
 
-export const returnToRequester= (request)=>{
-    ccmaInstance.post('requestAction/returnToRequester/',request)
+
+export const approveRequest= async (request)=>{
+    return  ccmaInstance.post('requestAction/execute/',request)
+}
+
+export const returnToRequester= async (request)=>{
+    return ccmaInstance.post('requestAction/returnToRequester/',request)
 }
 export const getSystemList =(SystemAccessList)=>{
     return SystemAccessList.map((systemAccess)=>systemAccess.systemName).filter((value, index, self)=>  self.indexOf(value) === index);
@@ -227,8 +73,4 @@ export const getSystemAccessList =(systemAccessList, systemName)=>{
      return systemAccessList.filter((systemAccess)=> systemAccess.systemName ===systemName);
 }
 
-const  fetchRequest = (id)=>{
-    const existingRequest = requestList.find((existingRequest)=> existingRequest.ID == id);
-    return existingRequest;
-}
 

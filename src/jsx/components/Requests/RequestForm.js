@@ -31,33 +31,32 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     const [systemList, setSystemList]=useState([]);
     const [systemAccessList, setSystemAccessList]=useState([{}]);
 
-    useEffect(()=>{
-        fetchRequesterList().then((response) => {
-            const responseList = response.data;
-            setRequesterList(responseList);
-        } );
-        fetchProjectList().then((response) => {
-            const responseList = response.data;
-            setProjectList(responseList);
-        });
-        fetchAllSystemAccessList().then((response)=>{
-            const responseList = response.data;
-            setAllSystemAccessList(responseList);
-            let systemList= getSystemList(responseList);
-            setSystemList(systemList);
-            let systemAccessList = getSystemAccessList(responseList ,responseList[0].systemName );
-            setSystemAccessList(systemAccessList);
-        });
+    useEffect(async ()=>{
+        let response = await fetchRequesterList();
+        let responseList = response.data;
+        setRequesterList(responseList);
+
+        response = await fetchProjectList();
+        responseList = response.data;
+        setProjectList(responseList);
+
+        response = await fetchAllSystemAccessList();
+        responseList = response.data;
+        setAllSystemAccessList(responseList);
+        let systemList= getSystemList(responseList);
+        setSystemList(systemList);
+        let systemAccessList = getSystemAccessList(responseList ,responseList[0].systemName );
+        setSystemAccessList(systemAccessList);
+
     },[show])
-    useEffect(()=>{
-        fetchAllSystemAccessList().then((response)=>{
-            const responseList = response.data;
-            setAllSystemAccessList(responseList);
-            let systemList= getSystemList(responseList);
-            setSystemList(systemList);
-            let systemAccessList = getSystemAccessList(responseList ,responseList[0].systemName );
-            setSystemAccessList(systemAccessList);
-        });
+    useEffect(async ()=>{
+        let response = await fetchAllSystemAccessList();
+        let responseList = response.data;
+        setAllSystemAccessList(responseList);
+        let systemList= getSystemList(responseList);
+        setSystemList(systemList);
+        let systemAccessList = getSystemAccessList(responseList ,responseList[0].systemName );
+        setSystemAccessList(systemAccessList);
     },[request])
 
     function updateRequestTemplate() {
@@ -71,35 +70,37 @@ const RequestForm = ({show, onShow, request, setRequest, formMode, setFormMode})
     }
 
 //Add Submit data
-    const submitHandler = (event)=> {
+    const submitHandler = async (event)=> {
         event.preventDefault();
-        onShow(false);
         updateRequestTemplate();
-        submitRequest(requestTemplate);
-        swal('Good job!', 'Successfully submitted', "success");
+        await submitRequest(requestTemplate);
+        onShow(false);
+        await swal('Good job!', 'Successfully submitted', "success");
+
     };
 
-    const approveHandler= (event)=> {
+    const approveHandler= async (event)=> {
         event.preventDefault();
-        onShow(false);
         updateRequestTemplate();
-        approveRequest(requestTemplate);
-        swal('Good job!', 'Successfully approve', "success");
-    };
-    const returnToRequesterHandler= (event)=> {
-        event.preventDefault();
+        await approveRequest(requestTemplate);
         onShow(false);
+        await swal('Good job!', 'Successfully approve', "success");
+
+    };
+    const returnToRequesterHandler= async (event)=> {
+        event.preventDefault();
         updateRequestTemplate();
-        returnToRequester(requestTemplate);
-        swal('Good job!', 'Successfully return to requester', "success");
-    };
-    const saveAsDraftHandler = (event)=> {
-        event.preventDefault();
+        await returnToRequester(requestTemplate);
         onShow(false);
+        await swal('Good job!', 'Successfully return to requester', "success");
+    };
+    const saveAsDraftHandler = async (event)=> {
+        event.preventDefault();
         updateRequestTemplate();
         console.log("Template request before sending", requestTemplate);
-        saveAsDraftRequest(requestTemplate);
-        swal('Good job!', 'Successfully save as draft', "success");
+        await saveAsDraftRequest(requestTemplate);
+        onShow(false);
+        await swal('Good job!', 'Successfully save as draft', "success");
     };
 
     function closeForm() {

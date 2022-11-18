@@ -31,15 +31,15 @@ const RequestsListGrid = ({request, setRequest, setFormMode, refresh, onShow})=>
     };
 
     // use effect
-    useEffect(() => {
+    useEffect(async () => {
         setData(document.querySelectorAll("#example2_wrapper tbody tr"));
-        fetchRequestList().then((response)=> {
-            const responseList = response.data;
-            setRequestsList(responseList);
-            setRequestsDraftList(responseList.filter((request)=> request.status === DRAFT));
-            setRequestsPendingList(responseList.filter((request)=> request.status === PENDING));
-            setRequestsCompletedList(responseList.filter((request)=> request.status === COMPLETED));
-        });
+        let response = await fetchRequestList();
+        const responseList = response.data;
+        setRequestsList(responseList);
+        setRequestsDraftList(responseList.filter((request)=> request.status === DRAFT));
+        setRequestsPendingList(responseList.filter((request)=> request.status === PENDING));
+        setRequestsCompletedList(responseList.filter((request)=> request.status === COMPLETED));
+
     },[refresh]);
 
 
