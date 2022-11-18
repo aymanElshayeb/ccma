@@ -104,3 +104,11 @@ export function saveRole(role) {
 export function getRole() {
     return JSON.parse(localStorage.getItem('userDetails')).role;
 }
+
+export function getId(){
+    return JSON.parse(localStorage.getItem('userDetails')).id;
+}
+
+export function getName(){
+    return JSON.parse(localStorage.getItem('userDetails')).userName;
+}
