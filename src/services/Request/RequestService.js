@@ -23,7 +23,7 @@ export const REQUEST_EDITABLE_DRAFT = {
     isApproveActive:false
 };
 export const REQUEST_EDITABLE_PENDING = {
-    editable:true,
+    editable:false,
     isSaveAsDraftActive: false,
     isSubmitActive:false,
     isReturnToRequester:true,
