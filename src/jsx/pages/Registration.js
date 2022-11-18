@@ -10,11 +10,11 @@ import {
 import logo from "../../images/Logo.svg";
 
 function Register(props) {
-    const [username, setUsername] = useState('nabil');
-    const [email, setEmail] = useState('nabilmokhtar15@gmail.com');
-    const [password, setPassword] = useState('poiuytrewq');
-    const [confirmPassword, setConfirmPassword] = useState('poiuytrewq');
-    const [fullName, setFullName] = useState('nabil mokhtar');
+    const [username, setUsername] = useState('raghavan');
+    const [email, setEmail] = useState('Elshayeb.external@infineon.com');
+    const [password, setPassword] = useState('password123');
+    const [confirmPassword, setConfirmPassword] = useState('password123');
+    const [fullName, setFullName] = useState('raghavan.chakravarthy');
     // const [role, setRole] = useState('');
 
     let errorsObj = { username: '', password: '' ,email:'',fullName:''};
