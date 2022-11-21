@@ -102,6 +102,20 @@ function getMode(requestStatus) {
 
 	}
 
+	function openForm(localRequest) {
+		const tempRequest = {
+			id: localRequest.id,
+			requesterId: localRequest.requester.id,
+			projectId: localRequest.project.id,
+			systemAccessId: localRequest.systemAccess.id,
+			systemId: localRequest.systemAccess.systemName
+		};
+		setRequest(tempRequest);
+		console.log("request after modification", request);
+		getMode(localRequest.status);
+		onShow(true);
+	}
+
 	return(
 		<>
 			<div className="table-responsive">
@@ -132,12 +146,7 @@ function getMode(requestStatus) {
 										<td>
 											<div>
 												<Link to={"#"}  onClick={()=>{
-
-													const tempRequest= {id: localRequest.id,requesterId: localRequest.requester.id, projectId: localRequest.project.id, systemAccessId: localRequest.systemAccess.id, systemId: localRequest.systemAccess.systemName };
-													setRequest(tempRequest);
-													console.log("request after modification", request);
-													getMode(localRequest.status);
-													onShow(true);
+													openForm(localRequest);
 												}}>
 												<h5 className="text-nowrap">{localRequest.id}</h5>
 												</Link>
@@ -146,27 +155,47 @@ function getMode(requestStatus) {
 
 										<td>
 											<div>
+												<Link to={"#"}  onClick={()=>{
+													openForm(localRequest);
+												}}>
 												<h5 className="text-nowrap">{localRequest.requester.fullName}</h5>
+												</Link>
 											</div>
 										</td>
 										<td>
 											<div>
+												<Link to={"#"}  onClick={()=>{
+													openForm(localRequest);
+												}}>
 												<h5 className="text-nowrap">{localRequest.project.name}</h5>
+												</Link>
 											</div>
 										</td>
 										<td>
 											<div>
+												<Link to={"#"}  onClick={()=>{
+													openForm(localRequest);
+												}}>
 												<h5 className="text-nowrap">{localRequest.systemAccess.systemName}</h5>
+												</Link>
 											</div>
 										</td>
 										<td>
 											<div>
+												<Link to={"#"}  onClick={()=>{
+													openForm(localRequest);
+												}} >
 												<h5 className="text-nowrap">{localRequest.systemAccess.accessPermission}</h5>
+												</Link>
 											</div>
 										</td>
 										<td>
 											<div>
+												<Link to={"#"}  onClick={()=>{
+													openForm(localRequest);
+												}} >
 												<h5 className="text-nowrap">{localRequest.status}</h5>
+											</Link>
 											</div>
 										</td>
 										<td>
