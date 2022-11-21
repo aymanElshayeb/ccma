@@ -12,7 +12,7 @@ import {
 	REQUEST_EDITABLE_DRAFT, REQUEST_EDITABLE_PENDING,
 	REQUEST_READABLE
 } from "../../../services/Request/RequestService";
-import {getId} from "../../../services/AuthService";
+import {getId, getRole} from "../../../services/AuthService";
 
 
 const DropdownBlog = (props) =>{
@@ -41,16 +41,21 @@ const AccessRequests = () =>{
 
 
 	const [showAddRequest, onShowAddRequest] = useState(false);
-	const [request, setRequest] =useState({
 
-		requesterId: getId(),
-		projectId:1,
-		systemId:"JIRA",
-		systemAccessId:1,
-		status: DRAFT,
-		role: MEMBER
+	function getInitialRequestState() {
+		return {
 
-	});
+			requesterId: getId(),
+			projectId: 1,
+			systemId: "JIRA",
+			systemAccessId: 1,
+			status: DRAFT,
+			role: getRole()
+
+		};
+	}
+
+	const [request, setRequest] =useState(getInitialRequestState());
 	const [formMode, setFormMode]=useState(REQUEST_EDITABLE_DRAFT);
 
 	const [selectBtn, setSelectBtn] = useState("Newest");
@@ -130,13 +135,14 @@ const AccessRequests = () =>{
 
 	function draftMode() {
 		setFormMode(REQUEST_EDITABLE_DRAFT);
-		{onShowAddRequest(true)}
+		setRequest(getInitialRequestState());
+		onShowAddRequest(true)
 	}
 	return(
 		<>
 			<div className="mb-sm-5 mb-3 d-flex flex-wrap align-items-center text-head">
 				<div className=" mb-2 me-auto">
-				<Link to={"#"} className="btn btn-primary font-w600" onClick={()=> {draftMode()}}>+ New Request</Link>
+				<Link to={"#"} className="btn btn-primary font-w600" onClick={()=> {draftMode() }}>+ New Request</Link>
 				</div>
 				{/* <!-- Modal --> */}
 				<RequestForm  show={showAddRequest} onShow={onShowAddRequest} formMode={formMode} setFormMode={setFormMode} request={request} setRequest={setRequest}/>
