@@ -28,10 +28,7 @@ function LogoutPage(props){
                 </svg>
                 <span className="ms-2" >Logout </span>
             </Link>
-            <div
-                className="dropdown-item ai-icon">
-                <span className="ms-2" > {userName} </span>
-            </div>
+
         </>
     )
 }
